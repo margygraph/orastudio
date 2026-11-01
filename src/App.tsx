@@ -64,7 +64,7 @@ function Header() {
           ))}
           <a
             href="#booking"
-            className="magnetic-btn inline-flex items-center px-5 py-2.5 bg-clay text-white text-sm font-medium rounded-full"
+            className="magnetic-btn inline-flex items-center px-5 py-2.5 bg-electric-red text-white text-sm font-medium rounded-full"
           >
             Book a free trial
           </a>
@@ -153,7 +153,7 @@ function Hero() {
           <h1 className="font-display text-display-xl font-light text-charcoal mb-10">
             <SplitText text="Move well." delay={0.5} stagger={0.08} />
             <span className="block mt-2">
-              <SplitText text="Feel the difference." as="span" delay={0.9} stagger={0.06} className="italic text-clay" />
+              <SplitText text="Feel the difference." as="span" delay={0.9} stagger={0.06} className="italic text-electric-red" />
             </span>
           </h1>
 
