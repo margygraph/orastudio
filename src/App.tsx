@@ -1,6 +1,9 @@
-import { useState, useEffect, useCallback } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Reveal } from './components/Reveal';
+import { useState, useEffect, useCallback, useRef } from 'react';
+import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
+import {
+  SplitText, ParallaxImage, Counter, Marquee, ScrollProgress,
+  CursorGlow, SectionReveal, HorizontalSection, FadeUp
+} from './components/Cinematic';
 import {
   classes, instructors, timetable, memberships, testimonials, faqItems,
   type ClassType, type TimetableSlot
@@ -10,6 +13,7 @@ import { generateICS, downloadICS, getNextDateForDay, addMinutes } from './utils
 // ─── HEADER ────────────────────────────────────────────────────────────────────
 function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const nav = [
     { label: 'Classes', href: '#classes' },
     { label: 'Timetable', href: '#timetable' },
@@ -18,9 +22,17 @@ function Header() {
     { label: 'Contact', href: '#contact' },
   ];
 
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 50);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-bone/90 backdrop-blur-sm border-b border-black/5">
-      <div className="max-w-7xl mx-auto px-5 md:px-8 h-16 flex items-center justify-between">
+    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+      scrolled ? 'bg-bone/90 backdrop-blur-md border-b border-black/5' : 'bg-transparent'
+    }`}>
+      <div className="max-w-7xl mx-auto px-5 md:px-8 h-16 md:h-20 flex items-center justify-between">
         <a href="#" className="font-display text-xl font-semibold tracking-tight text-charcoal">
           Ora Studio
         </a>
@@ -32,7 +44,7 @@ function Header() {
           ))}
           <a
             href="#booking"
-            className="magnetic-btn inline-flex items-center px-5 py-2.5 bg-clay text-white text-sm font-medium rounded-full hover:bg-clay-light"
+            className="magnetic-btn inline-flex items-center px-5 py-2.5 bg-clay text-white text-sm font-medium rounded-full"
           >
             Book a free trial
           </a>
@@ -44,11 +56,7 @@ function Header() {
           aria-expanded={menuOpen}
         >
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-            {menuOpen ? (
-              <path d="M6 6l12 12M6 18L18 6" />
-            ) : (
-              <path d="M4 8h16M4 16h16" />
-            )}
+            {menuOpen ? <path d="M6 6l12 12M6 18L18 6" /> : <path d="M4 8h16M4 16h16" />}
           </svg>
         </button>
       </div>
@@ -83,49 +91,67 @@ function Header() {
 
 // ─── HERO ──────────────────────────────────────────────────────────────────────
 function Hero() {
+  const ref = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ['start start', 'end start'],
+  });
+  const y = useTransform(scrollYProgress, [0, 1], ['0%', '30%']);
+  const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
+  const scale = useTransform(scrollYProgress, [0, 1], [1, 1.1]);
+
   return (
-    <section className="min-h-screen flex items-center pt-16 relative overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-br from-bone via-bone to-sand/30" />
-      <div
-        className="absolute inset-0 opacity-20 md:opacity-30"
-        style={{
-          backgroundImage: 'url(https://image.qwenlm.ai/generated-images/0eeb0166-d224-45f1-8a97-7fc4ad5b7fda/_result.png)',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center right',
-        }}
-      />
-      <div className="max-w-7xl mx-auto px-5 md:px-8 w-full relative z-10 py-20 md:py-0">
-        <div className="max-w-3xl">
+    <section ref={ref} className="relative h-[100svh] flex items-center overflow-hidden">
+      {/* Background image with parallax */}
+      <motion.div
+        className="absolute inset-0"
+        style={{ y, scale }}
+      >
+        <div
+          className="absolute inset-0 bg-cover bg-center"
+          style={{
+            backgroundImage: 'url(https://image.qwenlm.ai/generated-images/0eeb0166-d224-45f1-8a97-7fc4ad5b7fda/_result.png)',
+          }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-bone via-bone/80 to-bone/40" />
+      </motion.div>
+
+      {/* Content */}
+      <motion.div
+        style={{ opacity }}
+        className="relative z-10 max-w-7xl mx-auto px-5 md:px-8 w-full"
+      >
+        <div className="max-w-4xl">
           <motion.p
-            initial={{ opacity: 0, y: 16 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-sm uppercase tracking-widest text-moss mb-6 font-medium"
+            transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+            className="text-xs md:text-sm uppercase tracking-[0.3em] text-moss mb-8 font-medium"
           >
             Pilates · Yoga · Strength — Milan
           </motion.p>
-          <motion.h1
+
+          <h1 className="font-display text-display-xl font-light text-charcoal mb-10">
+            <SplitText text="Move well." delay={0.5} stagger={0.08} />
+            <span className="block mt-2">
+              <SplitText text="Feel the difference." as="span" delay={0.9} stagger={0.06} className="italic text-clay" />
+            </span>
+          </h1>
+
+          <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.3 }}
-            className="font-display text-display-xl font-light text-charcoal mb-8"
+            transition={{ duration: 0.8, delay: 1.4, ease: [0.16, 1, 0.3, 1] }}
+            className="text-body-lg text-charcoal/70 max-w-xl mb-12"
           >
-            Move well.<br />
-            <span className="italic text-clay">Feel the difference.</span>
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.5 }}
-            className="text-body-lg text-charcoal/70 max-w-xl mb-10"
-          >
-            A small, intentional studio in the heart of Milan. Expert instructors, 
+            A small, intentional studio in the heart of Milan. Expert instructors,
             considered equipment, classes that actually fit your life.
           </motion.p>
+
           <motion.div
-            initial={{ opacity: 0, y: 16 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.7 }}
+            transition={{ duration: 0.8, delay: 1.6, ease: [0.16, 1, 0.3, 1] }}
             className="flex flex-col sm:flex-row gap-4"
           >
             <a
@@ -142,33 +168,84 @@ function Hero() {
             </a>
           </motion.div>
         </div>
+      </motion.div>
+
+      {/* Scroll indicator */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 2 }}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10"
+      >
+        <motion.div
+          animate={{ y: [0, 8, 0] }}
+          transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+          className="w-px h-12 bg-gradient-to-b from-transparent via-charcoal/40 to-transparent"
+        />
+      </motion.div>
+    </section>
+  );
+}
+
+// ─── MANIFESTO ─────────────────────────────────────────────────────────────────
+function Manifesto() {
+  return (
+    <section className="section-padding relative overflow-hidden">
+      <div className="max-w-7xl mx-auto px-5 md:px-8">
+        <SectionReveal>
+          <div className="max-w-5xl">
+            <p className="text-xs uppercase tracking-[0.3em] text-moss mb-8 font-medium">Our philosophy</p>
+            <h2 className="font-display text-display-lg text-charcoal leading-[1.1]">
+              We believe movement should feel <em className="text-clay">good</em>. Not punishing, not performative. Just honest work in a space designed for focus.
+            </h2>
+          </div>
+        </SectionReveal>
       </div>
-      {/* Decorative element */}
-      <div className="absolute right-0 top-1/2 -translate-y-1/2 w-1/3 h-2/3 hidden lg:block opacity-10">
-        <div className="w-full h-full bg-gradient-to-bl from-clay/40 to-transparent rounded-full blur-3xl" />
+
+      {/* Marquee */}
+      <div className="mt-20 -mx-4">
+        <Marquee items={['Reformer Pilates', 'Mat Pilates', 'Vinyasa Yoga', 'Yin Yoga', 'Strength & Mobility']} />
       </div>
     </section>
   );
 }
 
-// ─── CLASSES (BENTO GRID) ──────────────────────────────────────────────────────
+// ─── CLASSES (HORIZONTAL SCROLL) ───────────────────────────────────────────────
 function Classes() {
   return (
-    <section id="classes" className="section-padding">
-      <div className="max-w-7xl mx-auto px-5 md:px-8">
-        <Reveal>
-          <p className="text-sm uppercase tracking-widest text-moss mb-4 font-medium">What we offer</p>
-          <h2 className="font-display text-display-lg text-charcoal mb-4">Five disciplines.<br />One standard.</h2>
-          <p className="text-body-lg text-charcoal/60 max-w-xl mb-12">
-            Every class is taught by a specialist. Small groups. Real attention. No filler.
-          </p>
-        </Reveal>
+    <section id="classes" className="relative">
+      <div className="section-padding pb-8">
+        <div className="max-w-7xl mx-auto px-5 md:px-8">
+          <SectionReveal>
+            <p className="text-xs uppercase tracking-[0.3em] text-moss mb-6 font-medium">What we offer</p>
+            <SplitText text="Five disciplines. One standard." className="font-display text-display-lg text-charcoal mb-6" />
+            <p className="text-body-lg text-charcoal/60 max-w-xl">
+              Every class is taught by a specialist. Small groups. Real attention. No filler.
+            </p>
+          </SectionReveal>
+        </div>
+      </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      {/* Horizontal scroll on desktop */}
+      <div className="hidden md:block h-[300vh] relative">
+        <HorizontalSection className="h-[300vh]">
+          <div className="flex items-center gap-6 px-8">
+            {classes.map((cls, i) => (
+              <div key={cls.id} className="flex-shrink-0 w-[420px]">
+                <ClassCard cls={cls} index={i} />
+              </div>
+            ))}
+          </div>
+        </HorizontalSection>
+      </div>
+
+      {/* Grid on mobile */}
+      <div className="md:hidden px-5 pb-20">
+        <div className="grid grid-cols-1 gap-4">
           {classes.map((cls, i) => (
-            <Reveal key={cls.id} delay={i * 80}>
-              <ClassCard cls={cls} large={i === 0} />
-            </Reveal>
+            <FadeUp key={cls.id} delay={i * 0.08}>
+              <ClassCard cls={cls} index={i} />
+            </FadeUp>
           ))}
         </div>
       </div>
@@ -176,25 +253,31 @@ function Classes() {
   );
 }
 
-function ClassCard({ cls, large }: { cls: ClassType; large?: boolean }) {
+function ClassCard({ cls, index }: { cls: ClassType; index: number }) {
   return (
-    <div className={`group relative p-6 md:p-8 rounded-2xl border border-black/5 bg-white/50 hover:bg-white/80 transition-all duration-300 ${large ? 'md:col-span-2 md:row-span-2' : ''}`}>
-      <div className="flex items-start justify-between mb-4">
-        <span className={`inline-block w-3 h-3 rounded-full ${
-          cls.color === 'clay' ? 'bg-clay' :
-          cls.color === 'moss' ? 'bg-moss' :
-          cls.color === 'sand' ? 'bg-sand-dark' :
-          'bg-charcoal'
-        }`} />
-        <span className="text-xs text-charcoal/50 font-medium">{cls.duration} min</span>
+    <motion.div
+      className="group relative p-8 md:p-10 rounded-3xl border border-black/5 bg-white/60 backdrop-blur-sm hover:bg-white/90 transition-all duration-500 h-[500px] flex flex-col justify-between"
+      whileHover={{ y: -8 }}
+      transition={{ duration: 0.4 }}
+    >
+      <div>
+        <div className="flex items-start justify-between mb-6">
+          <span className={`inline-block w-3 h-3 rounded-full ${
+            cls.color === 'clay' ? 'bg-clay' :
+            cls.color === 'moss' ? 'bg-moss' :
+            cls.color === 'sand' ? 'bg-sand-dark' :
+            'bg-charcoal'
+          }`} />
+          <span className="text-xs text-charcoal/40 font-medium">{cls.duration} min</span>
+        </div>
+        <h3 className="font-display text-3xl md:text-4xl font-light text-charcoal mb-4 leading-tight">
+          {cls.name}
+        </h3>
+        <p className="text-sm text-charcoal/60 leading-relaxed">{cls.description}</p>
       </div>
-      <h3 className={`font-display ${large ? 'text-display-md' : 'text-xl'} font-medium text-charcoal mb-3`}>
-        {cls.name}
-      </h3>
-      <p className="text-sm text-charcoal/60 leading-relaxed mb-6">{cls.description}</p>
       <div className="flex items-center gap-4 text-xs text-charcoal/50">
-        <span className="px-2.5 py-1 rounded-full bg-bone border border-black/5">{cls.level}</span>
-        <span className="flex items-center gap-1">
+        <span className="px-3 py-1.5 rounded-full bg-bone border border-black/5">{cls.level}</span>
+        <span className="flex items-center gap-1.5">
           Intensity
           <span className="flex gap-0.5 ml-1">
             {[1, 2, 3, 4, 5].map(i => (
@@ -203,7 +286,7 @@ function ClassCard({ cls, large }: { cls: ClassType; large?: boolean }) {
           </span>
         </span>
       </div>
-    </div>
+    </motion.div>
   );
 }
 
@@ -223,21 +306,19 @@ function Timetable() {
 
   const getClassName = (id: string) => classes.find(c => c.id === id)?.name || '';
   const getInstructorName = (id: string) => instructors.find(i => i.id === id)?.name || '';
-  const getClassDuration = (id: string) => classes.find(c => c.id === id)?.duration || 50;
 
   return (
     <section id="timetable" className="section-padding bg-white/30">
       <div className="max-w-7xl mx-auto px-5 md:px-8">
-        <Reveal>
-          <p className="text-sm uppercase tracking-widest text-moss mb-4 font-medium">Weekly schedule</p>
-          <h2 className="font-display text-display-lg text-charcoal mb-4">This week at Ora</h2>
-          <p className="text-body-lg text-charcoal/60 max-w-xl mb-10">
+        <SectionReveal>
+          <p className="text-xs uppercase tracking-[0.3em] text-moss mb-6 font-medium">Weekly schedule</p>
+          <SplitText text="This week at Ora" className="font-display text-display-lg text-charcoal mb-6" />
+          <p className="text-body-lg text-charcoal/60 max-w-xl mb-12">
             Filter by class type or level. Book directly from here.
           </p>
-        </Reveal>
+        </SectionReveal>
 
-        {/* Filters */}
-        <Reveal delay={100}>
+        <FadeUp delay={0.1}>
           <div className="flex flex-wrap gap-3 mb-8">
             <select
               value={filterClass}
@@ -261,7 +342,7 @@ function Timetable() {
               <option value="Advanced">Advanced</option>
             </select>
           </div>
-        </Reveal>
+        </FadeUp>
 
         {/* Mobile: Day selector */}
         <div className="md:hidden mb-6">
@@ -273,9 +354,7 @@ function Timetable() {
                 aria-selected={selectedDay === day}
                 onClick={() => setSelectedDay(day)}
                 className={`flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                  selectedDay === day
-                    ? 'bg-charcoal text-white'
-                    : 'bg-white border border-black/10 text-charcoal/70'
+                  selectedDay === day ? 'bg-charcoal text-white' : 'bg-white border border-black/10 text-charcoal/70'
                 }`}
               >
                 {day.slice(0, 3)}
@@ -285,29 +364,31 @@ function Timetable() {
         </div>
 
         {/* Desktop: Full week grid */}
-        <div className="hidden md:block overflow-x-auto">
-          <div className="min-w-[800px]">
-            <div className="grid grid-cols-7 gap-px bg-black/5 rounded-2xl overflow-hidden border border-black/5">
-              {days.map(day => (
-                <div key={day} className="bg-bone p-3 text-center">
-                  <span className="text-xs font-semibold uppercase tracking-wider text-charcoal/60">{day.slice(0, 3)}</span>
-                </div>
-              ))}
-              {days.map(day => {
-                const daySlots = timetable.filter(s => s.day === day)
-                  .filter(s => filterClass === 'all' || s.classId === filterClass)
-                  .filter(s => filterLevel === 'all' || classes.find(c => c.id === s.classId)?.level === filterLevel);
-                return (
-                  <div key={day} className="bg-white p-2 min-h-[200px]">
-                    {daySlots.map(slot => (
-                      <TimetableSlotCard key={slot.id} slot={slot} compact />
-                    ))}
+        <FadeUp delay={0.2}>
+          <div className="hidden md:block overflow-x-auto">
+            <div className="min-w-[800px]">
+              <div className="grid grid-cols-7 gap-px bg-black/5 rounded-2xl overflow-hidden border border-black/5">
+                {days.map(day => (
+                  <div key={day} className="bg-bone p-3 text-center">
+                    <span className="text-xs font-semibold uppercase tracking-wider text-charcoal/60">{day.slice(0, 3)}</span>
                   </div>
-                );
-              })}
+                ))}
+                {days.map(day => {
+                  const daySlots = timetable.filter(s => s.day === day)
+                    .filter(s => filterClass === 'all' || s.classId === filterClass)
+                    .filter(s => filterLevel === 'all' || classes.find(c => c.id === s.classId)?.level === filterLevel);
+                  return (
+                    <div key={day} className="bg-white p-2 min-h-[200px]">
+                      {daySlots.map(slot => (
+                        <TimetableSlotCard key={slot.id} slot={slot} compact />
+                      ))}
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           </div>
-        </div>
+        </FadeUp>
 
         {/* Mobile: List view */}
         <div className="md:hidden space-y-3">
@@ -361,9 +442,7 @@ function TimetableSlotCard({ slot, compact }: { slot: TimetableSlot; compact: bo
       <a
         href="#booking"
         className={`ml-4 flex-shrink-0 px-4 py-2 rounded-full text-xs font-medium transition-colors ${
-          isFull
-            ? 'bg-black/5 text-charcoal/40 cursor-not-allowed'
-            : 'bg-clay text-white hover:bg-clay-light'
+          isFull ? 'bg-black/5 text-charcoal/40 cursor-not-allowed' : 'bg-clay text-white hover:bg-clay-light'
         }`}
         aria-disabled={isFull}
         tabIndex={isFull ? -1 : 0}
@@ -455,14 +534,12 @@ function BookingModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
             </div>
 
             <div className="p-5">
-              {/* Step indicators */}
               <div className="flex gap-2 mb-6">
                 {[1, 2, 3].map(s => (
                   <div key={s} className={`h-1 flex-1 rounded-full transition-colors ${s <= step ? 'bg-clay' : 'bg-black/10'}`} />
                 ))}
               </div>
 
-              {/* Step 1: Choose class */}
               {step === 1 && (
                 <div className="space-y-2 max-h-[50vh] overflow-y-auto">
                   {availableSlots.slice(0, 15).map(slot => {
@@ -490,7 +567,6 @@ function BookingModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
                 </div>
               )}
 
-              {/* Step 2: Details */}
               {step === 2 && (
                 <div className="space-y-4">
                   {selectedSlot && (
@@ -548,14 +624,18 @@ function BookingModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
                 </div>
               )}
 
-              {/* Step 3: Confirmation */}
               {step === 3 && selectedSlot && (
                 <div className="text-center py-6">
-                  <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-moss/10 flex items-center justify-center">
+                  <motion.div
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                    className="w-16 h-16 mx-auto mb-4 rounded-full bg-moss/10 flex items-center justify-center"
+                  >
                     <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#3F4A3C" strokeWidth="2">
                       <path d="M5 13l4 4L19 7" />
                     </svg>
-                  </div>
+                  </motion.div>
                   <h4 className="font-display text-xl font-medium text-charcoal mb-2">See you there</h4>
                   <p className="text-sm text-charcoal/60 mb-6">
                     {classes.find(c => c.id === selectedSlot.classId)?.name} with{' '}
@@ -589,22 +669,23 @@ function Memberships() {
   return (
     <section id="memberships" className="section-padding">
       <div className="max-w-7xl mx-auto px-5 md:px-8">
-        <Reveal>
-          <p className="text-sm uppercase tracking-widest text-moss mb-4 font-medium">Pricing</p>
-          <h2 className="font-display text-display-lg text-charcoal mb-4">Simple, transparent pricing</h2>
+        <SectionReveal>
+          <p className="text-xs uppercase tracking-[0.3em] text-moss mb-6 font-medium">Pricing</p>
+          <SplitText text="Simple, transparent pricing" className="font-display text-display-lg text-charcoal mb-6" />
           <p className="text-body-lg text-charcoal/60 max-w-xl mb-12">
             No contracts. No hidden fees. Start with a free trial.
           </p>
-        </Reveal>
+        </SectionReveal>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {memberships.map((mem, i) => (
-            <Reveal key={mem.id} delay={i * 100}>
-              <div className={`relative p-6 rounded-2xl border h-full flex flex-col ${
-                mem.highlighted
-                  ? 'border-clay bg-clay/5'
-                  : 'border-black/5 bg-white/50'
-              }`}>
+            <FadeUp key={mem.id} delay={i * 0.1}>
+              <motion.div
+                whileHover={{ y: -8 }}
+                className={`relative p-6 rounded-2xl border h-full flex flex-col ${
+                  mem.highlighted ? 'border-clay bg-clay/5' : 'border-black/5 bg-white/50'
+                }`}
+              >
                 {mem.highlighted && (
                   <span className="absolute -top-3 left-6 px-3 py-1 bg-clay text-white text-xs font-medium rounded-full">
                     Start here
@@ -631,15 +712,13 @@ function Memberships() {
                 <a
                   href={mem.isTrial ? '#booking' : '#contact'}
                   className={`magnetic-btn block text-center py-3 rounded-full text-sm font-medium transition-colors ${
-                    mem.highlighted
-                      ? 'bg-clay text-white hover:bg-clay-light'
-                      : 'border border-charcoal/20 text-charcoal hover:border-charcoal/40'
+                    mem.highlighted ? 'bg-clay text-white hover:bg-clay-light' : 'border border-charcoal/20 text-charcoal hover:border-charcoal/40'
                   }`}
                 >
                   {mem.isTrial ? 'Book free trial' : mem.price === 0 ? 'Get started' : 'Choose plan'}
                 </a>
-              </div>
-            </Reveal>
+              </motion.div>
+            </FadeUp>
           ))}
         </div>
       </div>
@@ -652,28 +731,33 @@ function Instructors() {
   return (
     <section id="instructors" className="section-padding bg-white/30">
       <div className="max-w-7xl mx-auto px-5 md:px-8">
-        <Reveal>
-          <p className="text-sm uppercase tracking-widest text-moss mb-4 font-medium">Our team</p>
-          <h2 className="font-display text-display-lg text-charcoal mb-12">Five specialists.<br />Each one invested in your progress.</h2>
-        </Reveal>
+        <SectionReveal>
+          <p className="text-xs uppercase tracking-[0.3em] text-moss mb-6 font-medium">Our team</p>
+          <SplitText text="Five specialists. Each one invested in your progress." className="font-display text-display-lg text-charcoal mb-12" />
+        </SectionReveal>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {instructors.map((inst, i) => (
-            <Reveal key={inst.id} delay={i * 80}>
-              <div className="group">
+            <FadeUp key={inst.id} delay={i * 0.08}>
+              <motion.div
+                whileHover={{ y: -4 }}
+                className="group"
+              >
                 <div className="aspect-[3/4] rounded-2xl mb-4 overflow-hidden relative">
-                  <img
+                  <motion.img
                     src={inst.image}
                     alt={`Portrait of ${inst.name}, ${inst.specialties.join(' and ')} instructor at Ora Studio`}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+                    className="w-full h-full object-cover"
                     loading="lazy"
+                    whileHover={{ scale: 1.03 }}
+                    transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
                   />
                 </div>
                 <h3 className="font-display text-lg font-medium text-charcoal">{inst.name}</h3>
                 <p className="text-xs text-clay mb-2">{inst.specialties.join(' · ')}</p>
                 <p className="text-sm text-charcoal/60 leading-relaxed">{inst.bio}</p>
-              </div>
-            </Reveal>
+              </motion.div>
+            </FadeUp>
           ))}
         </div>
       </div>
@@ -686,104 +770,72 @@ function Studio() {
   return (
     <section id="studio" className="section-padding">
       <div className="max-w-7xl mx-auto px-5 md:px-8">
-        <Reveal>
-          <p className="text-sm uppercase tracking-widest text-moss mb-4 font-medium">The space</p>
-          <h2 className="font-display text-display-lg text-charcoal mb-4">Designed for focus.</h2>
+        <SectionReveal>
+          <p className="text-xs uppercase tracking-[0.3em] text-moss mb-6 font-medium">The space</p>
+          <SplitText text="Designed for focus." className="font-display text-display-lg text-charcoal mb-6" />
           <p className="text-body-lg text-charcoal/60 max-w-xl mb-12">
             280 square metres in Porta Venezia. Natural materials, considered lighting, and the right equipment for each discipline.
           </p>
-        </Reveal>
+        </SectionReveal>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-16">
-          <Reveal delay={0}>
-            <div
-              className="aspect-square md:col-span-2 md:row-span-2 rounded-xl flex items-end p-4 bg-cover bg-center"
-              style={{ backgroundImage: 'url(https://image.qwenlm.ai/generated-images/02992ea2-c055-4fc7-ab6f-ca405182f6bd/_result.png)' }}
-            >
-              <span className="text-xs font-medium text-charcoal/70 bg-white/60 px-2 py-1 rounded-full backdrop-blur-sm">
-                The studio
-              </span>
-            </div>
-          </Reveal>
-          <Reveal delay={80}>
-            <div
-              className="aspect-square rounded-xl flex items-end p-4 bg-cover bg-center"
-              style={{ backgroundImage: 'url(https://image.qwenlm.ai/generated-images/2ac0b9ec-b887-4d9b-8ec2-248ad23170ec/_result.png)' }}
-            >
-              <span className="text-xs font-medium text-charcoal/70 bg-white/60 px-2 py-1 rounded-full backdrop-blur-sm">
-                Yoga space
-              </span>
-            </div>
-          </Reveal>
-          <Reveal delay={160}>
-            <div
-              className="aspect-square rounded-xl flex items-end p-4 bg-cover bg-center"
-              style={{ backgroundImage: 'url(https://image.qwenlm.ai/generated-images/24e086ae-bccd-4d6c-93a3-a7b905b95271/_result.png)' }}
-            >
-              <span className="text-xs font-medium text-charcoal/70 bg-white/60 px-2 py-1 rounded-full backdrop-blur-sm">
-                Equipment detail
-              </span>
-            </div>
-          </Reveal>
-          <Reveal delay={240}>
-            <div
-              className="aspect-square rounded-xl flex items-end p-4 bg-cover bg-center"
-              style={{ backgroundImage: 'url(https://image.qwenlm.ai/generated-images/51441e25-6053-4b22-9c8c-5b64b8f4207f/_result.png)' }}
-            >
-              <span className="text-xs font-medium text-charcoal/70 bg-white/60 px-2 py-1 rounded-full backdrop-blur-sm">
-                Natural light
-              </span>
-            </div>
-          </Reveal>
+          <FadeUp delay={0}>
+            <ParallaxImage
+              src="https://image.qwenlm.ai/generated-images/02992ea2-c055-4fc7-ab6f-ca405182f6bd/_result.png"
+              alt="Ora Studio main space"
+              className="aspect-square md:col-span-2 md:row-span-2 rounded-xl"
+            />
+          </FadeUp>
+          <FadeUp delay={0.1}>
+            <ParallaxImage
+              src="https://image.qwenlm.ai/generated-images/2ac0b9ec-b887-4d9b-8ec2-248ad23170ec/_result.png"
+              alt="Yoga space"
+              className="aspect-square rounded-xl"
+            />
+          </FadeUp>
+          <FadeUp delay={0.2}>
+            <ParallaxImage
+              src="https://image.qwenlm.ai/generated-images/24e086ae-bccd-4d6c-93a3-a7b905b95271/_result.png"
+              alt="Equipment detail"
+              className="aspect-square rounded-xl"
+            />
+          </FadeUp>
+          <FadeUp delay={0.3}>
+            <ParallaxImage
+              src="https://image.qwenlm.ai/generated-images/51441e25-6053-4b22-9c8c-5b64b8f4207f/_result.png"
+              alt="Natural light"
+              className="aspect-square rounded-xl"
+            />
+          </FadeUp>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16">
-          <Reveal>
+          <SectionReveal>
             <div>
               <h3 className="font-display text-xl font-medium text-charcoal mb-4">What to bring</h3>
               <ul className="space-y-3 text-sm text-charcoal/70">
-                <li className="flex items-start gap-3">
-                  <span className="w-1.5 h-1.5 rounded-full bg-clay mt-2 flex-shrink-0" />
-                  Comfortable clothing that allows full range of movement
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="w-1.5 h-1.5 rounded-full bg-clay mt-2 flex-shrink-0" />
-                  Grip socks for reformer classes (available at reception)
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="w-1.5 h-1.5 rounded-full bg-clay mt-2 flex-shrink-0" />
-                  Water bottle — refill station in the studio
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="w-1.5 h-1.5 rounded-full bg-clay mt-2 flex-shrink-0" />
-                  We provide mats, towels, and all equipment
-                </li>
+                {['Comfortable clothing that allows full range of movement', 'Grip socks for reformer classes (available at reception)', 'Water bottle — refill station in the studio', 'We provide mats, towels, and all equipment'].map((item, i) => (
+                  <li key={i} className="flex items-start gap-3">
+                    <span className="w-1.5 h-1.5 rounded-full bg-clay mt-2 flex-shrink-0" />
+                    {item}
+                  </li>
+                ))}
               </ul>
             </div>
-          </Reveal>
-          <Reveal delay={100}>
+          </SectionReveal>
+          <SectionReveal>
             <div>
               <h3 className="font-display text-xl font-medium text-charcoal mb-4">First visit</h3>
               <ol className="space-y-3 text-sm text-charcoal/70">
-                <li className="flex items-start gap-3">
-                  <span className="w-5 h-5 rounded-full bg-moss/10 text-moss text-xs flex items-center justify-center flex-shrink-0 mt-0.5">1</span>
-                  Arrive 10 minutes early
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="w-5 h-5 rounded-full bg-moss/10 text-moss text-xs flex items-center justify-center flex-shrink-0 mt-0.5">2</span>
-                  We'll show you the studio and introduce your instructor
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="w-5 h-5 rounded-full bg-moss/10 text-moss text-xs flex items-center justify-center flex-shrink-0 mt-0.5">3</span>
-                  Mention any injuries or limitations — we'll adapt
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="w-5 h-5 rounded-full bg-moss/10 text-moss text-xs flex items-center justify-center flex-shrink-0 mt-0.5">4</span>
-                  Class. Then tea or water in our rest area.
-                </li>
+                {['Arrive 10 minutes early', "We'll show you the studio and introduce your instructor", "Mention any injuries or limitations — we'll adapt", 'Class. Then tea or water in our rest area.'].map((item, i) => (
+                  <li key={i} className="flex items-start gap-3">
+                    <span className="w-5 h-5 rounded-full bg-moss/10 text-moss text-xs flex items-center justify-center flex-shrink-0 mt-0.5">{i + 1}</span>
+                    {item}
+                  </li>
+                ))}
               </ol>
             </div>
-          </Reveal>
+          </SectionReveal>
         </div>
       </div>
     </section>
@@ -792,49 +844,40 @@ function Studio() {
 
 // ─── SOCIAL PROOF ──────────────────────────────────────────────────────────────
 function SocialProof() {
-  const stats = [
-    { value: '1,200+', label: 'Classes taught in 2024' },
-    { value: '4.9', label: 'Average rating' },
-    { value: '92%', label: 'Members who stay past 6 months' },
-  ];
-
   return (
-    <section className="section-padding bg-charcoal text-white">
-      <div className="max-w-7xl mx-auto px-5 md:px-8">
-        <Reveal>
-          <div className="grid grid-cols-3 gap-4 md:gap-8 mb-16">
-            {stats.map(stat => (
-              <div key={stat.label} className="text-center">
-                <p className="font-display text-2xl md:text-4xl font-light text-bone mb-1">{stat.value}</p>
-                <p className="text-xs md:text-sm text-white/50">{stat.label}</p>
-              </div>
-            ))}
+    <section className="section-padding bg-charcoal text-white relative overflow-hidden">
+      <div className="max-w-7xl mx-auto px-5 md:px-8 relative z-10">
+        <SectionReveal>
+          <div className="grid grid-cols-3 gap-4 md:gap-8 mb-20">
+            <Counter value="1,200+" label="Classes taught in 2024" />
+            <Counter value="4.9" label="Average rating" />
+            <Counter value="92%" label="Members who stay past 6 months" />
           </div>
-        </Reveal>
+        </SectionReveal>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {testimonials.map((t, i) => (
-            <Reveal key={t.author} delay={i * 100}>
-              <blockquote className="p-6 rounded-2xl bg-white/5 border border-white/10">
-                <p className="text-sm text-white/80 leading-relaxed mb-4">"{t.text}"</p>
+            <FadeUp key={t.author} delay={i * 0.1}>
+              <blockquote className="p-6 rounded-2xl bg-white/5 border border-white/10 h-full flex flex-col">
+                <p className="text-sm text-white/80 leading-relaxed mb-4 flex-1">"{t.text}"</p>
                 <footer>
                   <p className="text-sm font-medium text-bone">{t.author}</p>
                   <p className="text-xs text-white/40">{t.role}</p>
                 </footer>
               </blockquote>
-            </Reveal>
+            </FadeUp>
           ))}
         </div>
 
-        <Reveal delay={300}>
-          <div className="mt-12 flex flex-wrap items-center justify-center gap-6 text-xs text-white/30">
-            <span> Balanced Body Certified</span>
+        <FadeUp delay={0.3}>
+          <div className="mt-16 flex flex-wrap items-center justify-center gap-6 text-xs text-white/30">
+            <span>Balanced Body Certified</span>
             <span>·</span>
             <span>Yoga Alliance Registered</span>
             <span>·</span>
             <span>CONI Affiliated</span>
           </div>
-        </Reveal>
+        </FadeUp>
       </div>
     </section>
   );
@@ -847,14 +890,14 @@ function FAQ() {
   return (
     <section id="faq" className="section-padding">
       <div className="max-w-3xl mx-auto px-5 md:px-8">
-        <Reveal>
-          <p className="text-sm uppercase tracking-widest text-moss mb-4 font-medium">Questions</p>
-          <h2 className="font-display text-display-lg text-charcoal mb-12">Common questions</h2>
-        </Reveal>
+        <SectionReveal>
+          <p className="text-xs uppercase tracking-[0.3em] text-moss mb-6 font-medium">Questions</p>
+          <SplitText text="Common questions" className="font-display text-display-lg text-charcoal mb-12" />
+        </SectionReveal>
 
         <div className="space-y-0 border-t border-black/10" role="list">
           {faqItems.map((item, i) => (
-            <Reveal key={i} delay={i * 50}>
+            <FadeUp key={i} delay={i * 0.05}>
               <div className="border-b border-black/10" role="listitem">
                 <button
                   onClick={() => setOpenIndex(openIndex === i ? null : i)}
@@ -864,21 +907,29 @@ function FAQ() {
                 >
                   <span className="text-sm md:text-base font-medium text-charcoal pr-4">{item.question}</span>
                   <svg
-                    className={`w-5 h-5 flex-shrink-0 text-charcoal/40 transition-transform duration-200 ${openIndex === i ? 'rotate-45' : ''}`}
+                    className={`w-5 h-5 flex-shrink-0 text-charcoal/40 transition-transform duration-300 ${openIndex === i ? 'rotate-45' : ''}`}
                     viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"
                   >
                     <path d="M12 5v14M5 12h14" />
                   </svg>
                 </button>
-                <div
-                  id={`faq-answer-${i}`}
-                  role="region"
-                  className={`overflow-hidden transition-all duration-300 ${openIndex === i ? 'max-h-96 pb-5' : 'max-h-0'}`}
-                >
-                  <p className="text-sm text-charcoal/60 leading-relaxed">{item.answer}</p>
-                </div>
+                <AnimatePresence>
+                  {openIndex === i && (
+                    <motion.div
+                      id={`faq-answer-${i}`}
+                      role="region"
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: 'auto', opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                      className="overflow-hidden"
+                    >
+                      <p className="text-sm text-charcoal/60 leading-relaxed pb-5">{item.answer}</p>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
-            </Reveal>
+            </FadeUp>
           ))}
         </div>
       </div>
@@ -891,38 +942,29 @@ function Contact() {
   return (
     <section id="contact" className="section-padding bg-white/30">
       <div className="max-w-7xl mx-auto px-5 md:px-8">
-        <Reveal>
-          <p className="text-sm uppercase tracking-widest text-moss mb-4 font-medium">Find us</p>
-          <h2 className="font-display text-display-lg text-charcoal mb-12">Come say hello.</h2>
-        </Reveal>
+        <SectionReveal>
+          <p className="text-xs uppercase tracking-[0.3em] text-moss mb-6 font-medium">Find us</p>
+          <SplitText text="Come say hello." className="font-display text-display-lg text-charcoal mb-12" />
+        </SectionReveal>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16">
-          <Reveal>
-            {/* Map placeholder */}
-            <div className="aspect-[4/3] rounded-2xl bg-sand/50 border border-black/5 flex items-center justify-center mb-8 relative overflow-hidden">
-              <div className="absolute inset-0 opacity-30">
-                <div className="w-full h-full" style={{
-                  backgroundImage: 'radial-gradient(circle at 30% 40%, #B9714F20 0%, transparent 50%), radial-gradient(circle at 70% 60%, #3F4A3C15 0%, transparent 40%)'
-                }} />
-              </div>
-              <div className="text-center relative z-10">
-                <svg className="w-8 h-8 mx-auto mb-2 text-clay" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                  <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" />
-                  <circle cx="12" cy="9" r="2.5" />
-                </svg>
-                <p className="text-sm text-charcoal/60">Porta Venezia, Milan</p>
-              </div>
-            </div>
-          </Reveal>
+          <SectionReveal>
+            <ParallaxImage
+              src="https://image.qwenlm.ai/generated-images/02992ea2-c055-4fc7-ab6f-ca405182f6bd/_result.png"
+              alt="Ora Studio location"
+              className="aspect-[4/3] rounded-2xl mb-8"
+              speed={0.2}
+            />
+          </SectionReveal>
 
-          <Reveal delay={100}>
+          <SectionReveal>
             <div className="space-y-8">
               <div>
-                <h3 className="text-sm font-semibold uppercase tracking-wider text-charcoal/50 mb-2">Address</h3>
+                <h3 className="text-xs font-semibold uppercase tracking-wider text-charcoal/50 mb-2">Address</h3>
                 <p className="text-charcoal">Via San Damiano 5<br />20122 Milan, Italy</p>
               </div>
               <div>
-                <h3 className="text-sm font-semibold uppercase tracking-wider text-charcoal/50 mb-2">Opening hours</h3>
+                <h3 className="text-xs font-semibold uppercase tracking-wider text-charcoal/50 mb-2">Opening hours</h3>
                 <div className="text-charcoal space-y-1 text-sm">
                   <p>Monday – Friday: 07:00 – 21:00</p>
                   <p>Saturday: 09:00 – 17:00</p>
@@ -930,21 +972,21 @@ function Contact() {
                 </div>
               </div>
               <div>
-                <h3 className="text-sm font-semibold uppercase tracking-wider text-charcoal/50 mb-2">Contact</h3>
+                <h3 className="text-xs font-semibold uppercase tracking-wider text-charcoal/50 mb-2">Contact</h3>
                 <div className="space-y-1 text-sm">
                   <a href="mailto:hello@orastudio.it" className="block text-charcoal hover:text-clay transition-colors">hello@orastudio.it</a>
                   <a href="https://instagram.com/orastudio" className="block text-charcoal hover:text-clay transition-colors" target="_blank" rel="noopener noreferrer">@orastudio</a>
                 </div>
               </div>
               <div>
-                <h3 className="text-sm font-semibold uppercase tracking-wider text-charcoal/50 mb-2">Getting here</h3>
+                <h3 className="text-xs font-semibold uppercase tracking-wider text-charcoal/50 mb-2">Getting here</h3>
                 <p className="text-sm text-charcoal/70">
                   San Babila metro (M1) — 4 min walk.<br />
                   Street parking available. Garage San Babila nearby.
                 </p>
               </div>
             </div>
-          </Reveal>
+          </SectionReveal>
         </div>
       </div>
     </section>
@@ -1002,17 +1044,25 @@ function FloatingCTA({ onBook }: { onBook: () => void }) {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  if (!visible) return null;
-
   return (
-    <div className="fixed bottom-6 left-5 right-5 md:left-auto md:right-8 md:bottom-8 z-40 md:w-auto">
-      <button
-        onClick={onBook}
-        className="magnetic-btn w-full md:w-auto px-6 py-3.5 bg-clay text-white font-medium rounded-full shadow-lg shadow-clay/20 text-sm"
-      >
-        Book a free trial
-      </button>
-    </div>
+    <AnimatePresence>
+      {visible && (
+        <motion.div
+          initial={{ y: 100, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          exit={{ y: 100, opacity: 0 }}
+          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+          className="fixed bottom-6 left-5 right-5 md:left-auto md:right-8 md:bottom-8 z-40 md:w-auto"
+        >
+          <button
+            onClick={onBook}
+            className="magnetic-btn w-full md:w-auto px-6 py-3.5 bg-clay text-white font-medium rounded-full shadow-lg shadow-clay/20 text-sm"
+          >
+            Book a free trial
+          </button>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 }
 
@@ -1020,7 +1070,6 @@ function FloatingCTA({ onBook }: { onBook: () => void }) {
 export default function App() {
   const [bookingOpen, setBookingOpen] = useState(false);
 
-  // Handle hash-based booking trigger
   const handleHashChange = useCallback(() => {
     if (window.location.hash === '#booking') {
       setBookingOpen(true);
@@ -1034,10 +1083,13 @@ export default function App() {
   }, [handleHashChange]);
 
   return (
-    <div className="grain min-h-screen bg-bone text-charcoal">
+    <div className="grain min-h-screen bg-bone text-charcoal relative">
+      <ScrollProgress />
+      <CursorGlow />
       <Header />
       <main>
         <Hero />
+        <Manifesto />
         <Classes />
         <Timetable />
         <Memberships />
