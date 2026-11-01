@@ -24,7 +24,42 @@
   --fg: #1C1B19;
   --accent: #B9714F;
   --muted: #3F4A3C;
+  --surface: #FFFFFF;
   --border: rgba(28, 27, 25, 0.1);
+  transition: background-color 1s ease, color 1s ease;
+}
+
+/* Time of day themes */
+[data-time="dawn"] {
+  --bg: #F4EFE6;
+  --fg: #1C1B19;
+  --accent: #B9714F;
+  --surface: #FDF8F2;
+  --muted: #3F4A3C;
+}
+
+[data-time="day"] {
+  --bg: #F4EFE6;
+  --fg: #1C1B19;
+  --accent: #B9714F;
+  --surface: #FFFFFF;
+  --muted: #3F4A3C;
+}
+
+[data-time="evening"] {
+  --bg: #2A2E28;
+  --fg: #F4EFE6;
+  --accent: #D4956F;
+  --surface: #3F4A3C;
+  --muted: #D9CDB8;
+}
+
+[data-time="night"] {
+  --bg: #1C1B19;
+  --fg: #F4EFE6;
+  --accent: #B9714F;
+  --surface: #2A2926;
+  --muted: #D9CDB8;
 }
 
 * {
@@ -46,6 +81,7 @@ body {
   color: var(--fg);
   line-height: 1.6;
   overflow-x: hidden;
+  transition: background-color 1s ease, color 1s ease;
 }
 
 @media (prefers-reduced-motion: reduce) {

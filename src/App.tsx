@@ -6,6 +6,10 @@ import {
 } from './components/Cinematic';
 import { Logo, LogoMark } from './components/Logo';
 import {
+  useTimeOfDay, TimeIndicator, BreathingCircle, CompassNav,
+  LiveTimetable, TypewriterTestimonials, MilanTimeFooter, ClassQuiz
+} from './components/Unique';
+import {
   classes, instructors, timetable, memberships, testimonials, faqItems,
   type ClassType, type TimetableSlot
 } from './data/studio';
@@ -867,20 +871,6 @@ function SocialProof() {
           </div>
         </SectionReveal>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {testimonials.map((t, i) => (
-            <FadeUp key={t.author} delay={i * 0.1}>
-              <blockquote className="p-6 rounded-2xl bg-white/5 border border-white/10 h-full flex flex-col">
-                <p className="text-sm text-white/80 leading-relaxed mb-4 flex-1">"{t.text}"</p>
-                <footer>
-                  <p className="text-sm font-medium text-bone">{t.author}</p>
-                  <p className="text-xs text-white/40">{t.role}</p>
-                </footer>
-              </blockquote>
-            </FadeUp>
-          ))}
-        </div>
-
         <FadeUp delay={0.3}>
           <div className="mt-16 flex flex-wrap items-center justify-center gap-6 text-xs text-white/30">
             <span>Balanced Body Certified</span>
@@ -1005,48 +995,7 @@ function Contact() {
   );
 }
 
-// ─── FOOTER ────────────────────────────────────────────────────────────────────
-function Footer() {
-  return (
-    <footer className="border-t border-black/5 py-12">
-      <div className="max-w-7xl mx-auto px-5 md:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-          <div>
-            <div className="mb-3">
-              <Logo />
-            </div>
-            <p className="text-sm text-charcoal/50">Pilates, Yoga & Strength<br />Via San Damiano 5, Milan</p>
-          </div>
-          <div>
-            <p className="text-sm font-medium text-charcoal mb-3">Quick links</p>
-            <nav className="space-y-2">
-              <a href="#classes" className="block text-sm text-charcoal/50 hover:text-charcoal transition-colors">Classes</a>
-              <a href="#timetable" className="block text-sm text-charcoal/50 hover:text-charcoal transition-colors">Timetable</a>
-              <a href="#memberships" className="block text-sm text-charcoal/50 hover:text-charcoal transition-colors">Memberships</a>
-              <a href="#faq" className="block text-sm text-charcoal/50 hover:text-charcoal transition-colors">FAQ</a>
-            </nav>
-          </div>
-          <div>
-            <p className="text-sm font-medium text-charcoal mb-3">Legal</p>
-            <nav className="space-y-2">
-              <a href="#" className="block text-sm text-charcoal/50 hover:text-charcoal transition-colors">Privacy Policy</a>
-              <a href="#" className="block text-sm text-charcoal/50 hover:text-charcoal transition-colors">Cookie Policy</a>
-              <a href="#" className="block text-sm text-charcoal/50 hover:text-charcoal transition-colors">Terms & Conditions</a>
-            </nav>
-          </div>
-        </div>
-        <div className="border-t border-black/5 pt-6 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-xs text-charcoal/40">
-            © {new Date().getFullYear()} Ora Studio S.r.l. — P.IVA 12345678901 — REA MI-0000000
-          </p>
-          <p className="text-xs text-charcoal/40">
-            Designed with care in Milan
-          </p>
-        </div>
-      </div>
-    </footer>
-  );
-}
+// Footer is now MilanTimeFooter from Unique.tsx
 
 // ─── FLOATING CTA ──────────────────────────────────────────────────────────────
 function FloatingCTA({ onBook }: { onBook: () => void }) {
@@ -1083,6 +1032,7 @@ function FloatingCTA({ onBook }: { onBook: () => void }) {
 // ─── APP ───────────────────────────────────────────────────────────────────────
 export default function App() {
   const [bookingOpen, setBookingOpen] = useState(false);
+  const timeOfDay = useTimeOfDay();
 
   const handleHashChange = useCallback(() => {
     if (window.location.hash === '#booking') {
@@ -1097,23 +1047,28 @@ export default function App() {
   }, [handleHashChange]);
 
   return (
-    <div className="grain min-h-screen bg-bone text-charcoal relative">
+    <div className="grain min-h-screen bg-[var(--bg)] text-[var(--fg)] relative transition-colors duration-1000">
       <ScrollProgress />
       <CursorGlow />
+      <TimeIndicator time={timeOfDay} />
+      <CompassNav />
       <Header />
       <main>
         <Hero />
+        <BreathingCircle />
         <Manifesto />
         <Classes />
-        <Timetable />
+        <LiveTimetable />
         <Memberships />
         <Instructors />
         <Studio />
         <SocialProof />
+        <TypewriterTestimonials />
+        <ClassQuiz />
         <FAQ />
         <Contact />
       </main>
-      <Footer />
+      <MilanTimeFooter />
       <FloatingCTA onBook={() => setBookingOpen(true)} />
       <BookingModal isOpen={bookingOpen} onClose={() => setBookingOpen(false)} />
     </div>
