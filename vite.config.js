@@ -3,9 +3,8 @@ import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
-  base: "/orastudio/", // <--- AGGIUNTA QUESTA RIGA FONDAMENTALE
-  plugins: [react(), tailwindcss()],
   base: "/orastudio/",
+  plugins: [react(), tailwindcss()],
   server: {
     host: "0.0.0.0",
     port: 3000,

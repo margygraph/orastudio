@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 import {
   SplitText, ParallaxImage, Counter, Marquee, ScrollProgress,
-  CursorGlow, SectionReveal, HorizontalSection, FadeUp
+  CursorGlow, SectionReveal, FadeUp
 } from './components/Cinematic';
 import { Logo, LogoMark } from './components/Logo';
 import {
@@ -237,7 +237,7 @@ function Manifesto() {
   );
 }
 
-// ─── CLASSES (HORIZONTAL SCROLL) ───────────────────────────────────────────────
+// ─── CLASSES (GRID LAYOUT) ─────────────────────────────────────────────────────
 function Classes() {
   return (
     <section id="classes" className="relative overflow-hidden">
@@ -246,34 +246,19 @@ function Classes() {
           <SectionReveal>
             <p className="text-xs uppercase tracking-[0.3em] text-moss mb-6 font-medium">What we offer</p>
             <SplitText text="Five disciplines. One standard." className="font-display text-display-lg text-charcoal mb-6" />
-            <p className="text-body-lg text-charcoal/60 max-w-xl">
+            <p className="text-body-lg text-charcoal/60 max-w-xl mb-12">
               Every class is taught by a specialist. Small groups. Real attention. No filler.
             </p>
           </SectionReveal>
-        </div>
-      </div>
 
-      {/* Horizontal scroll on desktop */}
-      <div className="hidden md:block h-[300vh] relative overflow-hidden">
-        <HorizontalSection className="h-[300vh]">
-          <div className="flex items-center gap-6 px-8 pr-[100vw]">
+          {/* Grid layout for all devices */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {classes.map((cls, i) => (
-              <div key={cls.id} className="flex-shrink-0 w-[420px]">
+              <FadeUp key={cls.id} delay={i * 0.08}>
                 <ClassCard cls={cls} index={i} />
-              </div>
+              </FadeUp>
             ))}
           </div>
-        </HorizontalSection>
-      </div>
-
-      {/* Grid on mobile */}
-      <div className="md:hidden px-5 pb-20">
-        <div className="grid grid-cols-1 gap-4">
-          {classes.map((cls, i) => (
-            <FadeUp key={cls.id} delay={i * 0.08}>
-              <ClassCard cls={cls} index={i} />
-            </FadeUp>
-          ))}
         </div>
       </div>
     </section>
@@ -283,7 +268,7 @@ function Classes() {
 function ClassCard({ cls, index }: { cls: ClassType; index: number }) {
   return (
     <motion.div
-      className="group relative p-8 md:p-10 rounded-3xl border border-black/5 bg-white/60 backdrop-blur-sm hover:bg-white/90 transition-all duration-500 h-[500px] flex flex-col justify-between"
+      className="group relative p-8 md:p-10 rounded-3xl border border-black/5 bg-white/60 backdrop-blur-sm hover:bg-white/90 transition-all duration-500 min-h-[400px] flex flex-col justify-between"
       whileHover={{ y: -8 }}
       transition={{ duration: 0.4 }}
     >
