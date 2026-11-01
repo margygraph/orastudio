@@ -683,13 +683,6 @@ function Instructors() {
 
 // ─── STUDIO ────────────────────────────────────────────────────────────────────
 function Studio() {
-  const galleryItems = [
-    { label: 'Reformer room', color: '#B9714F' },
-    { label: 'Yoga space', color: '#3F4A3C' },
-    { label: 'Equipment detail', color: '#D9CDB8' },
-    { label: 'Natural light', color: '#F4EFE6' },
-  ];
-
   return (
     <section id="studio" className="section-padding">
       <div className="max-w-7xl mx-auto px-5 md:px-8">
@@ -712,18 +705,36 @@ function Studio() {
               </span>
             </div>
           </Reveal>
-          {galleryItems.slice(1).map((item, i) => (
-            <Reveal key={item.label} delay={(i + 1) * 80}>
-              <div
-                className="aspect-square rounded-xl flex items-end p-4"
-                style={{ backgroundColor: item.color }}
-              >
-                <span className="text-xs font-medium text-charcoal/70 bg-white/60 px-2 py-1 rounded-full backdrop-blur-sm">
-                  {item.label}
-                </span>
-              </div>
-            </Reveal>
-          ))}
+          <Reveal delay={80}>
+            <div
+              className="aspect-square rounded-xl flex items-end p-4 bg-cover bg-center"
+              style={{ backgroundImage: 'url(https://image.qwenlm.ai/generated-images/2ac0b9ec-b887-4d9b-8ec2-248ad23170ec/_result.png)' }}
+            >
+              <span className="text-xs font-medium text-charcoal/70 bg-white/60 px-2 py-1 rounded-full backdrop-blur-sm">
+                Yoga space
+              </span>
+            </div>
+          </Reveal>
+          <Reveal delay={160}>
+            <div
+              className="aspect-square rounded-xl flex items-end p-4 bg-cover bg-center"
+              style={{ backgroundImage: 'url(https://image.qwenlm.ai/generated-images/24e086ae-bccd-4d6c-93a3-a7b905b95271/_result.png)' }}
+            >
+              <span className="text-xs font-medium text-charcoal/70 bg-white/60 px-2 py-1 rounded-full backdrop-blur-sm">
+                Equipment detail
+              </span>
+            </div>
+          </Reveal>
+          <Reveal delay={240}>
+            <div
+              className="aspect-square rounded-xl flex items-end p-4 bg-cover bg-center"
+              style={{ backgroundImage: 'url(https://image.qwenlm.ai/generated-images/51441e25-6053-4b22-9c8c-5b64b8f4207f/_result.png)' }}
+            >
+              <span className="text-xs font-medium text-charcoal/70 bg-white/60 px-2 py-1 rounded-full backdrop-blur-sm">
+                Natural light
+              </span>
+            </div>
+          </Reveal>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16">
