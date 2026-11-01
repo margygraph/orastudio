@@ -5,8 +5,8 @@ interface LogoProps {
 }
 
 export function Logo({ className = '', showText = true, variant = 'dark' }: LogoProps) {
-  const color = variant === 'dark' ? '#1C1B19' : '#F4EFE6';
-  const accentColor = '#B9714F';
+  const color = variant === 'dark' ? '#0A0A0A' : '#F5F5F5';
+  const accentColor = '#FF4D4D';
 
   return (
     <div className={`inline-flex items-center gap-2.5 ${className}`}>
@@ -55,7 +55,7 @@ export function Logo({ className = '', showText = true, variant = 'dark' }: Logo
         />
       </svg>
       {showText && (
-        <span className="font-display text-xl font-semibold tracking-tight" style={{ color }}>
+        <span className="font-display text-xl font-bold tracking-tight" style={{ color }}>
           Ora Studio
         </span>
       )}
@@ -64,8 +64,8 @@ export function Logo({ className = '', showText = true, variant = 'dark' }: Logo
 }
 
 export function LogoMark({ className = '', variant = 'dark' }: { className?: string; variant?: 'light' | 'dark' }) {
-  const color = variant === 'dark' ? '#1C1B19' : '#F4EFE6';
-  const accentColor = '#B9714F';
+  const color = variant === 'dark' ? '#0A0A0A' : '#F5F5F5';
+  const accentColor = '#FF4D4D';
 
   return (
     <svg

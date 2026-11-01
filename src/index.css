@@ -1,18 +1,18 @@
 @import "tailwindcss";
 
 @theme {
-  --color-clay: #B9714F;
-  --color-clay-light: #d4956f;
-  --color-bone: #F4EFE6;
-  --color-bone-dark: #EDE7DB;
-  --color-moss: #3F4A3C;
-  --color-moss-light: #5a6b56;
-  --color-charcoal: #1C1B19;
-  --color-sand: #D9CDB8;
-  --color-sand-dark: #c4b8a3;
+  --color-electric-red: #FF4D4D;
+  --color-electric-red-light: #FF6B6B;
+  --color-neon-cyan: #00D9FF;
+  --color-neon-cyan-light: #33E1FF;
+  --color-solar-yellow: #FFE500;
+  --color-solar-yellow-light: #FFE933;
+  --color-deep-black: #0A0A0A;
+  --color-ice-white: #F5F5F5;
+  --color-ice-white-dark: #E8E8E8;
 
-  --font-display: 'Fraunces', serif;
-  --font-body: 'Inter', sans-serif;
+  --font-display: 'Space Grotesk', sans-serif;
+  --font-body: 'DM Sans', sans-serif;
 
   --ease-out-smooth: cubic-bezier(0.25, 0.46, 0.45, 0.94);
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
@@ -20,46 +20,56 @@
 }
 
 :root {
-  --bg: #F4EFE6;
-  --fg: #1C1B19;
-  --accent: #B9714F;
-  --muted: #3F4A3C;
+  --bg: #F5F5F5;
+  --fg: #0A0A0A;
+  --accent: #FF4D4D;
+  --secondary: #00D9FF;
+  --tertiary: #FFE500;
+  --muted: #666666;
   --surface: #FFFFFF;
-  --border: rgba(28, 27, 25, 0.1);
+  --border: rgba(10, 10, 10, 0.1);
   transition: background-color 1s ease, color 1s ease;
 }
 
 /* Time of day themes */
 [data-time="dawn"] {
-  --bg: #F4EFE6;
-  --fg: #1C1B19;
-  --accent: #B9714F;
-  --surface: #FDF8F2;
-  --muted: #3F4A3C;
+  --bg: #F5F5F5;
+  --fg: #0A0A0A;
+  --accent: #FF4D4D;
+  --secondary: #00D9FF;
+  --tertiary: #FFE500;
+  --surface: #FFFFFF;
+  --muted: #666666;
 }
 
 [data-time="day"] {
-  --bg: #F4EFE6;
-  --fg: #1C1B19;
-  --accent: #B9714F;
+  --bg: #F5F5F5;
+  --fg: #0A0A0A;
+  --accent: #FF4D4D;
+  --secondary: #00D9FF;
+  --tertiary: #FFE500;
   --surface: #FFFFFF;
-  --muted: #3F4A3C;
+  --muted: #666666;
 }
 
 [data-time="evening"] {
-  --bg: #2A2E28;
-  --fg: #F4EFE6;
-  --accent: #D4956F;
-  --surface: #3F4A3C;
-  --muted: #D9CDB8;
+  --bg: #0A0A0A;
+  --fg: #F5F5F5;
+  --accent: #FF4D4D;
+  --secondary: #00D9FF;
+  --tertiary: #FFE500;
+  --surface: #1A1A1A;
+  --muted: #999999;
 }
 
 [data-time="night"] {
-  --bg: #1C1B19;
-  --fg: #F4EFE6;
-  --accent: #B9714F;
-  --surface: #2A2926;
-  --muted: #D9CDB8;
+  --bg: #0A0A0A;
+  --fg: #F5F5F5;
+  --accent: #FF4D4D;
+  --secondary: #00D9FF;
+  --tertiary: #FFE500;
+  --surface: #1A1A1A;
+  --muted: #999999;
 }
 
 * {
@@ -245,16 +255,41 @@ body {
   transition: transform 0.1s linear;
 }
 
-/* Cinematic letterbox for hero */
-.letterbox-top,
-.letterbox-bottom {
-  position: absolute;
-  left: 0;
-  right: 0;
-  height: 0;
-  background: var(--charcoal);
-  z-index: 5;
-  transition: height 1.2s var(--ease-out-expo);
+/* Legacy color aliases for backward compatibility */
+.bg-clay { background-color: var(--accent); }
+.bg-clay-light { background-color: #FF6B6B; }
+.bg-moss { background-color: var(--secondary); }
+.bg-moss\/10 { background-color: color-mix(in srgb, var(--secondary) 10%, transparent); }
+.bg-bone { background-color: var(--bg); }
+.bg-bone\/90 { background-color: color-mix(in srgb, var(--bg) 90%, transparent); }
+.bg-charcoal { background-color: var(--fg); }
+.bg-charcoal\/40 { background-color: color-mix(in srgb, var(--fg) 40%, transparent); }
+.bg-sand-dark { background-color: var(--tertiary); }
+.text-clay { color: var(--accent); }
+.text-moss { color: var(--secondary); }
+.text-bone { color: var(--bg); }
+.text-charcoal { color: var(--fg); }
+.text-charcoal\/40 { color: color-mix(in srgb, var(--fg) 40%, transparent); }
+.text-charcoal\/50 { color: color-mix(in srgb, var(--fg) 50%, transparent); }
+.text-charcoal\/60 { color: color-mix(in srgb, var(--fg) 60%, transparent); }
+.text-charcoal\/70 { color: color-mix(in srgb, var(--fg) 70%, transparent); }
+.text-charcoal\/80 { color: color-mix(in srgb, var(--fg) 80%, transparent); }
+.border-clay { border-color: var(--accent); }
+.border-clay\/20 { border-color: color-mix(in srgb, var(--accent) 20%, transparent); }
+.border-clay\/30 { border-color: color-mix(in srgb, var(--accent) 30%, transparent); }
+.border-charcoal\/20 { border-color: color-mix(in srgb, var(--fg) 20%, transparent); }
+.border-charcoal\/40 { border-color: color-mix(in srgb, var(--fg) 40%, transparent); }
+.hover\:text-clay:hover { color: var(--accent); }
+.hover\:bg-clay-light:hover { background-color: #FF6B6B; }
+.hover\:border-clay\/20:hover { border-color: color-mix(in srgb, var(--accent) 20%, transparent); }
+.hover\:border-clay\/30:hover { border-color: color-mix(in srgb, var(--accent) 30%, transparent); }
+.hover\:border-charcoal\/40:hover { border-color: color-mix(in srgb, var(--fg) 40%, transparent); }
+.focus\:border-clay:focus { border-color: var(--accent); }
+.shadow-clay\/20 { --tw-shadow-color: color-mix(in srgb, var(--accent) 20%, transparent); }
+.bg-clay\/5 { background-color: color-mix(in srgb, var(--accent) 5%, transparent); }
+.bg-clay\/40 { background-color: color-mix(in srgb, var(--accent) 40%, transparent); }
+
+/* Cursor glow with new accent color */
+.cursor-glow {
+  background: radial-gradient(circle, rgba(255,77,77,0.08) 0%, transparent 70%);
 }
-.letterbox-top { top: 0; }
-.letterbox-bottom { bottom: 0; }

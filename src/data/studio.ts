@@ -48,7 +48,7 @@ export const classes: ClassType[] = [
     level: 'All Levels',
     duration: 50,
     intensity: 3,
-    color: 'clay'
+    color: 'electric-red'
   },
   {
     id: 'mat',
@@ -58,7 +58,7 @@ export const classes: ClassType[] = [
     level: 'All Levels',
     duration: 50,
     intensity: 3,
-    color: 'moss'
+    color: 'neon-cyan'
   },
   {
     id: 'vinyasa',
@@ -68,7 +68,7 @@ export const classes: ClassType[] = [
     level: 'Intermediate',
     duration: 60,
     intensity: 4,
-    color: 'moss'
+    color: 'solar-yellow'
   },
   {
     id: 'yin',
@@ -78,7 +78,7 @@ export const classes: ClassType[] = [
     level: 'All Levels',
     duration: 60,
     intensity: 1,
-    color: 'sand'
+    color: 'neon-cyan'
   },
   {
     id: 'strength',
@@ -88,7 +88,7 @@ export const classes: ClassType[] = [
     level: 'All Levels',
     duration: 50,
     intensity: 4,
-    color: 'charcoal'
+    color: 'electric-red'
   }
 ];
 
@@ -99,7 +99,7 @@ export const instructors: Instructor[] = [
     specialties: ['Reformer Pilates', 'Mat Pilates'],
     bio: '12 years teaching Pilates. Trained at Stott Pilates International. Former contemporary dancer.',
     image: 'https://image.qwenlm.ai/generated-images/788fd279-b5cc-4ae7-b369-d4048f79722e/_result.png',
-    imageColor: '#B9714F'
+    imageColor: '#FF4D4D'
   },
   {
     id: 'marco',
@@ -107,7 +107,7 @@ export const instructors: Instructor[] = [
     specialties: ['Strength & Mobility', 'Mat Pilates'],
     bio: 'Strength coach and movement specialist. MSc in Sports Science. Works with athletes and desk-bound professionals alike.',
     image: 'https://image.qwenlm.ai/generated-images/57a8e29f-aa07-455c-aba2-b0c595eb4416/_result.png',
-    imageColor: '#3F4A3C'
+    imageColor: '#00D9FF'
   },
   {
     id: 'sara',
@@ -115,7 +115,7 @@ export const instructors: Instructor[] = [
     specialties: ['Vinyasa Yoga', 'Yin Yoga'],
     bio: 'RYT-500 certified. Studied in Rishikesh and Mysore. Her teaching is grounded, clear, and never dogmatic.',
     image: 'https://image.qwenlm.ai/generated-images/c4546b57-9c46-4eb6-a20a-9020f2f5eed3/_result.png',
-    imageColor: '#D9CDB8'
+    imageColor: '#FFE500'
   },
   {
     id: 'luca',
@@ -123,7 +123,7 @@ export const instructors: Instructor[] = [
     specialties: ['Reformer Pilates', 'Strength & Mobility'],
     bio: 'Balanced Body certified. Background in physiotherapy. Specialises in rehabilitation and postural correction.',
     image: 'https://image.qwenlm.ai/generated-images/239cc06a-4e1b-44b2-b308-8abdc30829f2/_result.png',
-    imageColor: '#1C1B19'
+    imageColor: '#0A0A0A'
   },
   {
     id: 'anna',
@@ -131,7 +131,7 @@ export const instructors: Instructor[] = [
     specialties: ['Vinyasa Yoga', 'Mat Pilates'],
     bio: 'Yoga teacher and somatic practitioner. 8 years of teaching. Focuses on breath-led movement and mindful strength.',
     image: 'https://image.qwenlm.ai/generated-images/cabc62f1-3382-4d90-a783-73722628d248/_result.png',
-    imageColor: '#5a6b56'
+    imageColor: '#00D9FF'
   }
 ];
 
