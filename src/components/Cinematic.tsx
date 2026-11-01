@@ -55,6 +55,11 @@ export function ParallaxImage({ src, alt, className = '', speed = 0.3, mask = tr
   const y = useTransform(scrollYProgress, [0, 1], ['-15%', '15%']);
   const smoothY = useSpring(y, { stiffness: 50, damping: 20, mass: 0.5 });
 
+  // Ottimizza l'URL dell'immagine per qwenlm.ai
+  const optimizedSrc = src.includes('qwenlm.ai') && !src.includes('?')
+    ? `${src}?w=800&q=75&fm=webp`
+    : src;
+
   return (
     <div ref={ref} className={`overflow-hidden ${className}`}>
       <motion.div
@@ -62,10 +67,11 @@ export function ParallaxImage({ src, alt, className = '', speed = 0.3, mask = tr
         style={{ y: smoothY }}
       >
         <img
-          src={src}
+          src={optimizedSrc}
           alt={alt}
           className="w-full h-full object-cover"
           loading="lazy"
+          decoding="async"
         />
       </motion.div>
     </div>

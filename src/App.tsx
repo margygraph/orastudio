@@ -124,9 +124,15 @@ function Hero() {
   return (
     <section ref={ref} className="relative min-h-[100svh] flex items-center overflow-hidden pt-20 md:pt-0">
       <motion.div className="absolute inset-0" style={{ y, scale }}>
-        <div
-          className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: 'url(https://image.qwenlm.ai/generated-images/0eeb0166-d224-45f1-8a97-7fc4ad5b7fda/_result.png)' }}
+        <img
+          src="https://image.qwenlm.ai/generated-images/0eeb0166-d224-45f1-8a97-7fc4ad5b7fda/_result.png?w=1200&q=75&fm=webp"
+          alt="Ora Studio - Pilates, Yoga & Strength in Milan"
+          className="absolute inset-0 w-full h-full object-cover"
+          loading="eager"
+          fetchPriority="high"
+          decoding="async"
+          width="1200"
+          height="800"
         />
         <div className="absolute inset-0 bg-gradient-to-br from-ice-white via-ice-white/95 to-ice-white/70" />
       </motion.div>

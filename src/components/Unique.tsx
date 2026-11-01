@@ -573,16 +573,20 @@ export function TypewriterTestimonials() {
           </div>
 
           {/* Progress dots */}
-          <div className="flex items-center gap-2 mt-8">
+          <div className="flex items-center gap-3 mt-8">
             {testimonials.map((_, i) => (
               <button
                 key={i}
                 onClick={() => setActiveIndex(i)}
-                className={`w-2 h-2 rounded-full transition-all ${
-                  i === activeIndex ? 'bg-[var(--accent)] w-6' : 'bg-[var(--fg)]/20'
+                className={`min-w-[48px] min-h-[48px] flex items-center justify-center rounded-full transition-all ${
+                  i === activeIndex ? 'bg-[var(--accent)]' : 'bg-transparent'
                 }`}
                 aria-label={`View testimonial ${i + 1}`}
-              />
+              >
+                <span className={`w-2 h-2 rounded-full transition-all ${
+                  i === activeIndex ? 'bg-white w-6' : 'bg-[var(--fg)]/30'
+                }`} />
+              </button>
             ))}
           </div>
         </div>
