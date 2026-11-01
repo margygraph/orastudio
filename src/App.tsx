@@ -4,6 +4,7 @@ import {
   SplitText, ParallaxImage, Counter, Marquee, ScrollProgress,
   CursorGlow, SectionReveal, HorizontalSection, FadeUp
 } from './components/Cinematic';
+import { Logo, LogoMark } from './components/Logo';
 import {
   classes, instructors, timetable, memberships, testimonials, faqItems,
   type ClassType, type TimetableSlot
@@ -33,8 +34,8 @@ function Header() {
       scrolled ? 'bg-bone/90 backdrop-blur-md border-b border-black/5' : 'bg-transparent'
     }`}>
       <div className="max-w-7xl mx-auto px-5 md:px-8 h-16 md:h-20 flex items-center justify-between">
-        <a href="#" className="font-display text-xl font-semibold tracking-tight text-charcoal">
-          Ora Studio
+        <a href="#" className="inline-flex items-center">
+          <Logo />
         </a>
         <nav className="hidden md:flex items-center gap-8" aria-label="Main navigation">
           {nav.map(item => (
@@ -101,7 +102,7 @@ function Hero() {
   const scale = useTransform(scrollYProgress, [0, 1], [1, 1.1]);
 
   return (
-    <section ref={ref} className="relative h-[100svh] flex items-center overflow-hidden">
+    <section ref={ref} className="relative min-h-[100svh] flex items-center overflow-hidden pt-20 md:pt-0">
       {/* Background image with parallax */}
       <motion.div
         className="absolute inset-0"
@@ -119,14 +120,23 @@ function Hero() {
       {/* Content */}
       <motion.div
         style={{ opacity }}
-        className="relative z-10 max-w-7xl mx-auto px-5 md:px-8 w-full"
+        className="relative z-10 max-w-7xl mx-auto px-5 md:px-8 w-full py-12 md:py-0"
       >
         <div className="max-w-4xl">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+            className="mb-6 md:mb-8"
+          >
+            <LogoMark className="w-10 h-10 md:w-12 md:h-12" />
+          </motion.div>
+
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="text-xs md:text-sm uppercase tracking-[0.3em] text-moss mb-8 font-medium"
+            className="text-xs md:text-sm uppercase tracking-[0.3em] text-moss mb-6 md:mb-8 font-medium"
           >
             Pilates · Yoga · Strength — Milan
           </motion.p>
@@ -1000,7 +1010,9 @@ function Footer() {
       <div className="max-w-7xl mx-auto px-5 md:px-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
           <div>
-            <p className="font-display text-lg font-semibold text-charcoal mb-2">Ora Studio</p>
+            <div className="mb-3">
+              <Logo />
+            </div>
             <p className="text-sm text-charcoal/50">Pilates, Yoga & Strength<br />Via San Damiano 5, Milan</p>
           </div>
           <div>
