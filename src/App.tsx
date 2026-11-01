@@ -145,7 +145,7 @@ function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="text-xs md:text-sm uppercase tracking-[0.3em] text-moss mb-6 md:mb-8 font-medium"
+            className="text-xs md:text-sm uppercase tracking-[0.3em] text-neon-cyan mb-6 md:mb-8 font-bold"
           >
             Pilates · Yoga · Strength — Milan
           </motion.p>
@@ -196,7 +196,7 @@ function Manifesto() {
       <div className="max-w-7xl mx-auto px-5 md:px-8">
         <SectionReveal>
           <div className="max-w-5xl">
-            <p className="text-xs uppercase tracking-[0.3em] text-moss mb-8 font-medium">Our philosophy</p>
+            <p className="text-xs uppercase tracking-[0.3em] text-neon-cyan mb-8 font-bold">Our philosophy</p>
             <h2 className="font-display text-display-lg text-charcoal leading-[1.1]">
               We believe movement should feel <em className="text-clay">good</em>. Not punishing, not performative. Just honest work in a space designed for focus.
             </h2>
@@ -217,7 +217,7 @@ function Classes() {
       <div className="section-padding pb-8">
         <div className="max-w-7xl mx-auto px-5 md:px-8">
           <SectionReveal>
-            <p className="text-xs uppercase tracking-[0.3em] text-moss mb-6 font-medium">What we offer</p>
+            <p className="text-xs uppercase tracking-[0.3em] text-neon-cyan mb-6 font-bold">What we offer</p>
             <SplitText text="Five disciplines. One standard." className="font-display text-display-lg text-charcoal mb-6" />
             <p className="text-body-lg text-charcoal/60 max-w-xl mb-12">
               Every class is taught by a specialist. Small groups. Real attention. No filler.
@@ -292,7 +292,7 @@ function Timetable() {
     <section id="timetable" className="section-padding bg-white/30">
       <div className="max-w-7xl mx-auto px-5 md:px-8">
         <SectionReveal>
-          <p className="text-xs uppercase tracking-[0.3em] text-moss mb-6 font-medium">Weekly schedule</p>
+          <p className="text-xs uppercase tracking-[0.3em] text-neon-cyan mb-6 font-bold">Weekly schedule</p>
           <SplitText text="This week at Ora" className="font-display text-display-lg text-charcoal mb-6" />
           <p className="text-body-lg text-charcoal/60 max-w-xl mb-12">
             Filter by class type or level. Book directly from here.
@@ -541,7 +541,7 @@ function Memberships() {
     <section id="memberships" className="section-padding">
       <div className="max-w-7xl mx-auto px-5 md:px-8">
         <SectionReveal>
-          <p className="text-xs uppercase tracking-[0.3em] text-moss mb-6 font-medium">Pricing</p>
+          <p className="text-xs uppercase tracking-[0.3em] text-neon-cyan mb-6 font-bold">Pricing</p>
           <SplitText text="Simple, transparent pricing" className="font-display text-display-lg text-charcoal mb-6" />
           <p className="text-body-lg text-charcoal/60 max-w-xl mb-12">No contracts. No hidden fees. Start with a free trial.</p>
         </SectionReveal>
@@ -560,7 +560,7 @@ function Memberships() {
                 <ul className="space-y-2 mb-6 flex-1">
                   {mem.features.map(f => (
                     <li key={f} className="flex items-start gap-2 text-sm text-charcoal/70">
-                      <svg className="w-4 h-4 text-moss flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 13l4 4L19 7" /></svg>
+                      <svg className="w-4 h-4 text-neon-cyan flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 13l4 4L19 7" /></svg>
                       {f}
                     </li>
                   ))}
@@ -583,7 +583,7 @@ function Instructors() {
     <section id="instructors" className="section-padding bg-white/30">
       <div className="max-w-7xl mx-auto px-5 md:px-8">
         <SectionReveal>
-          <p className="text-xs uppercase tracking-[0.3em] text-moss mb-6 font-medium">Our team</p>
+          <p className="text-xs uppercase tracking-[0.3em] text-neon-cyan mb-6 font-bold">Our team</p>
           <SplitText text="Five specialists. Each one invested in your progress." className="font-display text-display-lg text-charcoal mb-12" />
         </SectionReveal>
 
@@ -612,7 +612,7 @@ function Studio() {
     <section id="studio" className="section-padding">
       <div className="max-w-7xl mx-auto px-5 md:px-8">
         <SectionReveal>
-          <p className="text-xs uppercase tracking-[0.3em] text-moss mb-6 font-medium">The space</p>
+          <p className="text-xs uppercase tracking-[0.3em] text-neon-cyan mb-6 font-bold">The space</p>
           <SplitText text="Designed for focus." className="font-display text-display-lg text-charcoal mb-6" />
           <p className="text-body-lg text-charcoal/60 max-w-xl mb-12">280 square metres in Porta Venezia. Natural materials, considered lighting, and the right equipment for each discipline.</p>
         </SectionReveal>
@@ -652,7 +652,7 @@ function Studio() {
               <ol className="space-y-3 text-sm text-charcoal/70">
                 {['Arrive 10 minutes early', "We'll show you the studio and introduce your instructor", "Mention any injuries or limitations — we'll adapt", 'Class. Then tea or water in our rest area.'].map((item, i) => (
                   <li key={i} className="flex items-start gap-3">
-                    <span className="w-5 h-5 rounded-full bg-moss/10 text-moss text-xs flex items-center justify-center flex-shrink-0 mt-0.5">{i + 1}</span>
+                    <span className="w-5 h-5 rounded-full bg-neon-cyan/20 text-neon-cyan text-xs flex items-center justify-center flex-shrink-0 mt-0.5 font-bold">{i + 1}</span>
                     {item}
                   </li>
                 ))}
@@ -668,7 +668,7 @@ function Studio() {
 // ─── SOCIAL PROOF ──────────────────────────────────────────────────────────────
 function SocialProof() {
   return (
-    <section className="section-padding bg-charcoal text-white relative overflow-hidden">
+    <section className="section-padding bg-deep-black text-ice-white relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-5 md:px-8 relative z-10">
         <SectionReveal>
           <div className="grid grid-cols-3 gap-4 md:gap-8 mb-20">
@@ -679,11 +679,11 @@ function SocialProof() {
         </SectionReveal>
 
         <FadeUp delay={0.3}>
-          <div className="mt-16 flex flex-wrap items-center justify-center gap-6 text-xs text-white/30">
+          <div className="mt-16 flex flex-wrap items-center justify-center gap-6 text-xs text-ice-white/60">
             <span>Balanced Body Certified</span>
-            <span>·</span>
+            <span className="text-neon-cyan">·</span>
             <span>Yoga Alliance Registered</span>
-            <span>·</span>
+            <span className="text-neon-cyan">·</span>
             <span>CONI Affiliated</span>
           </div>
         </FadeUp>
@@ -700,8 +700,8 @@ function FAQ() {
     <section id="faq" className="section-padding">
       <div className="max-w-3xl mx-auto px-5 md:px-8">
         <SectionReveal>
-          <p className="text-xs uppercase tracking-[0.3em] text-moss mb-6 font-medium">Questions</p>
-          <SplitText text="Common questions" className="font-display text-display-lg text-charcoal mb-12" />
+          <p className="text-xs uppercase tracking-[0.3em] text-neon-cyan mb-6 font-bold">Questions</p>
+          <SplitText text="Common questions" className="font-display text-display-lg text-deep-black mb-12" />
         </SectionReveal>
 
         <div className="space-y-0 border-t border-black/10" role="list">
@@ -736,7 +736,7 @@ function Contact() {
     <section id="contact" className="section-padding bg-white/30">
       <div className="max-w-7xl mx-auto px-5 md:px-8">
         <SectionReveal>
-          <p className="text-xs uppercase tracking-[0.3em] text-moss mb-6 font-medium">Find us</p>
+          <p className="text-xs uppercase tracking-[0.3em] text-neon-cyan mb-6 font-bold">Find us</p>
           <SplitText text="Come say hello." className="font-display text-display-lg text-charcoal mb-12" />
         </SectionReveal>
 

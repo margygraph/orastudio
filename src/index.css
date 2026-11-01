@@ -321,13 +321,21 @@ body {
 .bg-charcoal { background-color: #0A0A0A !important; }
 .bg-charcoal\/40 { background-color: rgba(10,10,10,0.4) !important; }
 .text-charcoal { color: #0A0A0A !important; }
-.text-charcoal\/40 { color: rgba(10,10,10,0.4) !important; }
-.text-charcoal\/50 { color: rgba(10,10,10,0.5) !important; }
-.text-charcoal\/60 { color: rgba(10,10,10,0.6) !important; }
-.text-charcoal\/70 { color: rgba(10,10,10,0.7) !important; }
-.text-charcoal\/80 { color: rgba(10,10,10,0.8) !important; }
-.border-charcoal\/20 { border-color: rgba(10,10,10,0.2) !important; }
-.border-charcoal\/40 { border-color: rgba(10,10,10,0.4) !important; }
-.hover\:border-charcoal\/40:hover { border-color: rgba(10,10,10,0.4) !important; }
+.text-charcoal\/40 { color: rgba(10,10,10,0.6) !important; }
+.text-charcoal\/50 { color: rgba(10,10,10,0.7) !important; }
+.text-charcoal\/60 { color: rgba(10,10,10,0.8) !important; }
+.text-charcoal\/70 { color: rgba(10,10,10,0.85) !important; }
+.text-charcoal\/80 { color: rgba(10,10,10,0.9) !important; }
+.border-charcoal\/20 { border-color: rgba(10,10,10,0.3) !important; }
+.border-charcoal\/40 { border-color: rgba(10,10,10,0.5) !important; }
+.hover\:border-charcoal\/40:hover { border-color: rgba(10,10,10,0.5) !important; }
+
+/* White text on dark backgrounds */
+.text-white { color: #FFFFFF !important; }
+.bg-white { background-color: #FFFFFF !important; }
+.bg-white\/30 { background-color: rgba(255,255,255,0.3) !important; }
+.bg-white\/50 { background-color: rgba(255,255,255,0.5) !important; }
+.bg-white\/60 { background-color: rgba(255,255,255,0.6) !important; }
+.bg-white\/90 { background-color: rgba(255,255,255,0.9) !important; }
 
 .bg-sand-dark { background-color: #FFE500 !important; }

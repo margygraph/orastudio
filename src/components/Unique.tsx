@@ -27,32 +27,40 @@ export function useTimeOfDay(): TimeOfDay {
     const root = document.documentElement;
     const palettes: Record<TimeOfDay, Record<string, string>> = {
       dawn: {
-        '--bg': '#F4EFE6',
-        '--fg': '#1C1B19',
-        '--accent': '#B9714F',
-        '--surface': '#FDF8F2',
-        '--muted': '#3F4A3C',
+        '--bg': '#F5F5F5',
+        '--fg': '#0A0A0A',
+        '--accent': '#FF4D4D',
+        '--secondary': '#00D9FF',
+        '--tertiary': '#FFE500',
+        '--surface': '#FFFFFF',
+        '--muted': '#666666',
       },
       day: {
-        '--bg': '#F4EFE6',
-        '--fg': '#1C1B19',
-        '--accent': '#B9714F',
+        '--bg': '#F5F5F5',
+        '--fg': '#0A0A0A',
+        '--accent': '#FF4D4D',
+        '--secondary': '#00D9FF',
+        '--tertiary': '#FFE500',
         '--surface': '#FFFFFF',
-        '--muted': '#3F4A3C',
+        '--muted': '#666666',
       },
       evening: {
-        '--bg': '#2A2E28',
-        '--fg': '#F4EFE6',
-        '--accent': '#D4956F',
-        '--surface': '#3F4A3C',
-        '--muted': '#D9CDB8',
+        '--bg': '#0A0A0A',
+        '--fg': '#F5F5F5',
+        '--accent': '#FF4D4D',
+        '--secondary': '#00D9FF',
+        '--tertiary': '#FFE500',
+        '--surface': '#1A1A1A',
+        '--muted': '#999999',
       },
       night: {
-        '--bg': '#1C1B19',
-        '--fg': '#F4EFE6',
-        '--accent': '#B9714F',
-        '--surface': '#2A2926',
-        '--muted': '#D9CDB8',
+        '--bg': '#0A0A0A',
+        '--fg': '#F5F5F5',
+        '--accent': '#FF4D4D',
+        '--secondary': '#00D9FF',
+        '--tertiary': '#FFE500',
+        '--surface': '#1A1A1A',
+        '--muted': '#999999',
       },
     };
     const palette = palettes[time];
@@ -66,28 +74,31 @@ export function useTimeOfDay(): TimeOfDay {
 }
 
 export function TimeIndicator({ time }: { time: TimeOfDay }) {
-  const labels: Record<TimeOfDay, string> = {
-    dawn: 'Dawn',
-    day: 'Day',
-    evening: 'Evening',
-    night: 'Night',
+  const getTimeLabel = () => {
+    const now = new Date();
+    const hours = now.getHours();
+    const minutes = now.getMinutes();
+    return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
   };
-  const icons: Record<TimeOfDay, string> = {
-    dawn: '🌅',
-    day: '☀️',
-    evening: '🌇',
-    night: '🌙',
+
+  const getGradient = () => {
+    switch (time) {
+      case 'dawn': return 'from-orange-400 via-pink-400 to-purple-400';
+      case 'day': return 'from-yellow-400 via-orange-400 to-red-400';
+      case 'evening': return 'from-purple-500 via-pink-500 to-orange-400';
+      case 'night': return 'from-blue-600 via-purple-600 to-indigo-700';
+    }
   };
 
   return (
     <motion.div
       initial={{ opacity: 0, y: -10 }}
       animate={{ opacity: 1, y: 0 }}
-      className="fixed top-20 right-5 md:right-8 z-40 px-3 py-1.5 rounded-full bg-[var(--surface)] border border-black/5 text-xs font-medium text-[var(--muted)] backdrop-blur-sm"
-      aria-label={`Current time of day: ${labels[time]}`}
+      className="fixed top-20 right-5 md:right-8 z-40 flex items-center gap-2 px-4 py-2 rounded-full bg-[var(--surface)]/90 backdrop-blur-md border border-black/5 shadow-lg"
+      aria-label={`Current time: ${getTimeLabel()}`}
     >
-      <span className="mr-1.5">{icons[time]}</span>
-      {labels[time]}
+      <div className={`w-2 h-2 rounded-full bg-gradient-to-r ${getGradient()} animate-pulse`} />
+      <span className="text-xs font-bold text-[var(--fg)] tabular-nums">{getTimeLabel()}</span>
     </motion.div>
   );
 }
