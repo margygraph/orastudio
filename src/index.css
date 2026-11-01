@@ -294,6 +294,27 @@ body {
   background: radial-gradient(circle, rgba(255,77,77,0.08) 0%, transparent 70%);
 }
 
+/* Keyframes per animazioni hero */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 /* Legacy color aliases - map old names to new Electric Minimal palette */
 .bg-clay { background-color: #FF4D4D !important; }
 .bg-clay\/5 { background-color: rgba(255,77,77,0.05) !important; }

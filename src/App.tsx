@@ -112,88 +112,53 @@ function Header() {
 
 // ─── HERO ──────────────────────────────────────────────────────────────────────
 function Hero() {
-  const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ['start start', 'end start'],
-  });
-  const y = useTransform(scrollYProgress, [0, 1], ['0%', '30%']);
-  const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
-  const scale = useTransform(scrollYProgress, [0, 1], [1, 1.1]);
-
   return (
-    <section ref={ref} className="relative min-h-[100svh] flex items-center overflow-hidden pt-20 md:pt-0">
-      <motion.div className="absolute inset-0" style={{ y, scale }}>
-        <img
-          src="https://image.qwenlm.ai/generated-images/0eeb0166-d224-45f1-8a97-7fc4ad5b7fda/_result.png?w=1200&q=75&fm=webp"
-          alt="Ora Studio - Pilates, Yoga & Strength in Milan"
-          className="absolute inset-0 w-full h-full object-cover"
-          loading="eager"
-          fetchPriority="high"
-          decoding="async"
-          width="1200"
-          height="800"
-        />
-        <div className="absolute inset-0 bg-gradient-to-br from-ice-white via-ice-white/95 to-ice-white/70" />
-      </motion.div>
+    <section className="relative min-h-[100svh] flex items-center overflow-hidden pt-20 md:pt-0">
+      <div className="absolute inset-0">
+        {/* Gradiente CSS puro al posto dell'immagine per performance */}
+        <div className="absolute inset-0 bg-gradient-to-br from-ice-white via-solar-yellow/10 to-neon-cyan/5" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-electric-red/5 via-transparent to-transparent" />
+      </div>
 
-      <motion.div style={{ opacity }} className="relative z-10 max-w-7xl mx-auto px-5 md:px-8 w-full py-12 md:py-0">
+      <div className="relative z-10 max-w-7xl mx-auto px-5 md:px-8 w-full py-12 md:py-0 animate-[fadeInUp_0.8s_ease-out]">
         <div className="max-w-4xl">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-            className="mb-6 md:mb-8"
-          >
+          <div className="mb-6 md:mb-8">
             <LogoMark className="w-12 h-12 md:w-16 md:h-16" />
-          </motion.div>
+          </div>
 
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="text-sm md:text-base uppercase tracking-[0.3em] text-neon-cyan mb-6 md:mb-8 font-bold"
+          <p
+            className="text-sm md:text-base uppercase tracking-[0.3em] text-neon-cyan mb-6 md:mb-8 font-bold animate-[fadeInUp_0.8s_ease-out_0.2s_both]"
             style={{ textShadow: '0 2px 10px rgba(0, 217, 255, 0.3)' }}
           >
             Pilates · Yoga · Strength — Milan
-          </motion.p>
+          </p>
 
-          <h1 className="font-display text-display-xl font-bold text-deep-black mb-10 leading-[0.9]" style={{ textShadow: '0 4px 20px rgba(10, 10, 10, 0.1)' }}>
-            <SplitText text="Move well." delay={0.5} stagger={0.08} />
-            <span className="block mt-2">
-              <SplitText text="Feel the difference." as="span" delay={0.9} stagger={0.06} className="italic text-electric-red" />
-            </span>
+          <h1 className="font-display text-display-xl font-bold text-deep-black mb-10 leading-[0.9] animate-[fadeInUp_0.8s_ease-out_0.4s_both]" style={{ textShadow: '0 4px 20px rgba(10, 10, 10, 0.1)' }}>
+            Move well.<br />
+            <span className="italic text-electric-red">Feel the difference.</span>
           </h1>
 
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 1.4, ease: [0.16, 1, 0.3, 1] }}
-            className="text-xl md:text-2xl text-deep-black/90 max-w-2xl mb-12 leading-relaxed font-medium"
+          <p
+            className="text-xl md:text-2xl text-deep-black/90 max-w-2xl mb-12 leading-relaxed font-medium animate-[fadeInUp_0.8s_ease-out_0.6s_both]"
             style={{ textShadow: '0 2px 10px rgba(255, 255, 255, 0.8)' }}
           >
             A small, intentional studio in the heart of Milan. Expert instructors, considered equipment, classes that actually fit your life.
-          </motion.p>
+          </p>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 1.6, ease: [0.16, 1, 0.3, 1] }}
-            className="flex flex-col sm:flex-row gap-4"
-          >
+          <div className="flex flex-col sm:flex-row gap-4 animate-[fadeInUp_0.8s_ease-out_0.8s_both]">
             <a href="#booking" className="magnetic-btn inline-flex items-center justify-center px-10 py-5 bg-electric-red text-white font-bold rounded-full text-lg shadow-2xl hover:shadow-electric-red/50 hover:scale-105 transition-all">
               Book a free trial
             </a>
             <a href="#classes" className="inline-flex items-center justify-center px-10 py-5 border-2 border-deep-black text-deep-black font-bold rounded-full text-lg hover:bg-deep-black hover:text-ice-white transition-all">
               Explore classes
             </a>
-          </motion.div>
+          </div>
         </div>
-      </motion.div>
+      </div>
 
-      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2 }} className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10">
-        <motion.div animate={{ y: [0, 8, 0] }} transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }} className="w-1 h-16 bg-gradient-to-b from-transparent via-electric-red to-transparent" />
-      </motion.div>
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 animate-[fadeIn_1s_ease-out_1.5s_both]">
+        <div className="w-1 h-16 bg-gradient-to-b from-transparent via-electric-red to-transparent animate-[bounce_2s_ease-in-out_infinite]" />
+      </div>
     </section>
   );
 }
