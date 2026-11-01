@@ -115,9 +115,22 @@ function Hero() {
   return (
     <section className="relative min-h-[100svh] flex items-center overflow-hidden pt-20 md:pt-0">
       <div className="absolute inset-0">
-        {/* Gradiente CSS puro al posto dell'immagine per performance */}
+        {/* Gradiente CSS puro */}
         <div className="absolute inset-0 bg-gradient-to-br from-ice-white via-solar-yellow/10 to-neon-cyan/5" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-electric-red/5 via-transparent to-transparent" />
+      </div>
+      
+      {/* Immagine decorativa piccola in alto a destra */}
+      <div className="absolute top-32 right-8 md:right-16 w-32 md:w-48 opacity-20 animate-[fadeIn_1.5s_ease-out_0.5s_both]">
+        <img
+          src="https://image.qwenlm.ai/generated-images/b1d061a0-410a-48bb-ab80-557a8282e6b0/_result.png?w=400&q=70&fm=webp"
+          alt=""
+          className="w-full h-auto rounded-2xl"
+          loading="eager"
+          fetchPriority="high"
+          width="400"
+          height="470"
+        />
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-5 md:px-8 w-full py-12 md:py-0 animate-[fadeInUp_0.8s_ease-out]">
