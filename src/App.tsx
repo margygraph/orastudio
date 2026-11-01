@@ -256,7 +256,7 @@ function Classes() {
       {/* Horizontal scroll on desktop */}
       <div className="hidden md:block h-[300vh] relative overflow-hidden">
         <HorizontalSection className="h-[300vh]">
-          <div className="flex items-center gap-6 px-8">
+          <div className="flex items-center gap-6 px-8 pr-[100vw]">
             {classes.map((cls, i) => (
               <div key={cls.id} className="flex-shrink-0 w-[420px]">
                 <ClassCard cls={cls} index={i} />
