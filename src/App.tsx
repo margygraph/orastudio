@@ -48,7 +48,7 @@ function Header() {
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
-        scrolled ? 'bg-bone/90 backdrop-blur-md border-b border-black/5' : 'bg-transparent'
+        scrolled ? 'bg-ice-white/95 backdrop-blur-xl border-b border-black/10 shadow-sm' : 'bg-transparent'
       }`}
       style={{ transform: hidden ? 'translateY(-100%)' : 'translateY(0)' }}
     >
@@ -58,24 +58,25 @@ function Header() {
         </a>
         <nav className="hidden md:flex items-center gap-8" aria-label="Main navigation">
           {nav.map(item => (
-            <a key={item.href} href={item.href} className="text-sm text-charcoal/70 hover:text-charcoal transition-colors">
+            <a key={item.href} href={item.href} className="text-sm font-semibold text-deep-black hover:text-electric-red transition-colors relative group">
               {item.label}
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-electric-red transition-all group-hover:w-full" />
             </a>
           ))}
           <a
             href="#booking"
-            className="magnetic-btn inline-flex items-center px-5 py-2.5 bg-electric-red text-white text-sm font-medium rounded-full"
+            className="magnetic-btn inline-flex items-center px-6 py-3 bg-electric-red text-white text-sm font-bold rounded-full shadow-lg hover:shadow-electric-red/50 hover:scale-105 transition-all"
           >
             Book a free trial
           </a>
         </nav>
         <button
-          className="md:hidden p-2 text-charcoal"
+          className="md:hidden p-2 text-deep-black hover:text-electric-red transition-colors"
           onClick={() => setMenuOpen(!menuOpen)}
           aria-label="Toggle menu"
           aria-expanded={menuOpen}
         >
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             {menuOpen ? <path d="M6 6l12 12M6 18L18 6" /> : <path d="M4 8h16M4 16h16" />}
           </svg>
         </button>
@@ -86,18 +87,18 @@ function Header() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-bone border-t border-black/5 overflow-hidden"
+            className="md:hidden bg-ice-white/98 backdrop-blur-xl border-t border-black/10 overflow-hidden"
           >
             <nav className="px-5 py-6 flex flex-col gap-4" aria-label="Mobile navigation">
               {nav.map(item => (
-                <a key={item.href} href={item.href} onClick={() => setMenuOpen(false)} className="text-base text-charcoal/80 py-2">
+                <a key={item.href} href={item.href} onClick={() => setMenuOpen(false)} className="text-lg font-semibold text-deep-black hover:text-electric-red transition-colors py-2">
                   {item.label}
                 </a>
               ))}
               <a
                 href="#booking"
                 onClick={() => setMenuOpen(false)}
-                className="magnetic-btn inline-flex items-center justify-center px-5 py-3 bg-clay text-white text-sm font-medium rounded-full mt-2"
+                className="magnetic-btn inline-flex items-center justify-center px-6 py-3 bg-electric-red text-white text-base font-bold rounded-full mt-2 shadow-lg"
               >
                 Book a free trial
               </a>
@@ -127,7 +128,7 @@ function Hero() {
           className="absolute inset-0 bg-cover bg-center"
           style={{ backgroundImage: 'url(https://image.qwenlm.ai/generated-images/0eeb0166-d224-45f1-8a97-7fc4ad5b7fda/_result.png)' }}
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-bone via-bone/80 to-bone/40" />
+        <div className="absolute inset-0 bg-gradient-to-br from-ice-white via-ice-white/95 to-ice-white/70" />
       </motion.div>
 
       <motion.div style={{ opacity }} className="relative z-10 max-w-7xl mx-auto px-5 md:px-8 w-full py-12 md:py-0">
@@ -138,19 +139,20 @@ function Hero() {
             transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
             className="mb-6 md:mb-8"
           >
-            <LogoMark className="w-10 h-10 md:w-12 md:h-12" />
+            <LogoMark className="w-12 h-12 md:w-16 md:h-16" />
           </motion.div>
 
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="text-xs md:text-sm uppercase tracking-[0.3em] text-neon-cyan mb-6 md:mb-8 font-bold"
+            className="text-sm md:text-base uppercase tracking-[0.3em] text-neon-cyan mb-6 md:mb-8 font-bold"
+            style={{ textShadow: '0 2px 10px rgba(0, 217, 255, 0.3)' }}
           >
             Pilates · Yoga · Strength — Milan
           </motion.p>
 
-          <h1 className="font-display text-display-xl font-light text-charcoal mb-10">
+          <h1 className="font-display text-display-xl font-bold text-deep-black mb-10 leading-[0.9]" style={{ textShadow: '0 4px 20px rgba(10, 10, 10, 0.1)' }}>
             <SplitText text="Move well." delay={0.5} stagger={0.08} />
             <span className="block mt-2">
               <SplitText text="Feel the difference." as="span" delay={0.9} stagger={0.06} className="italic text-electric-red" />
@@ -161,7 +163,8 @@ function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 1.4, ease: [0.16, 1, 0.3, 1] }}
-            className="text-body-lg text-charcoal/70 max-w-xl mb-12"
+            className="text-xl md:text-2xl text-deep-black/90 max-w-2xl mb-12 leading-relaxed font-medium"
+            style={{ textShadow: '0 2px 10px rgba(255, 255, 255, 0.8)' }}
           >
             A small, intentional studio in the heart of Milan. Expert instructors, considered equipment, classes that actually fit your life.
           </motion.p>
@@ -172,10 +175,10 @@ function Hero() {
             transition={{ duration: 0.8, delay: 1.6, ease: [0.16, 1, 0.3, 1] }}
             className="flex flex-col sm:flex-row gap-4"
           >
-            <a href="#booking" className="magnetic-btn inline-flex items-center justify-center px-8 py-4 bg-clay text-white font-medium rounded-full text-base">
+            <a href="#booking" className="magnetic-btn inline-flex items-center justify-center px-10 py-5 bg-electric-red text-white font-bold rounded-full text-lg shadow-2xl hover:shadow-electric-red/50 hover:scale-105 transition-all">
               Book a free trial
             </a>
-            <a href="#classes" className="inline-flex items-center justify-center px-8 py-4 border border-charcoal/20 text-charcoal font-medium rounded-full text-base hover:border-charcoal/40 transition-colors">
+            <a href="#classes" className="inline-flex items-center justify-center px-10 py-5 border-2 border-deep-black text-deep-black font-bold rounded-full text-lg hover:bg-deep-black hover:text-ice-white transition-all">
               Explore classes
             </a>
           </motion.div>
@@ -183,7 +186,7 @@ function Hero() {
       </motion.div>
 
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2 }} className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10">
-        <motion.div animate={{ y: [0, 8, 0] }} transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }} className="w-px h-12 bg-gradient-to-b from-transparent via-charcoal/40 to-transparent" />
+        <motion.div animate={{ y: [0, 8, 0] }} transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }} className="w-1 h-16 bg-gradient-to-b from-transparent via-electric-red to-transparent" />
       </motion.div>
     </section>
   );
