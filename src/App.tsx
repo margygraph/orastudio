@@ -230,7 +230,7 @@ function Manifesto() {
       </div>
 
       {/* Marquee */}
-      <div className="mt-20 -mx-4">
+      <div className="mt-20 overflow-hidden">
         <Marquee items={['Reformer Pilates', 'Mat Pilates', 'Vinyasa Yoga', 'Yin Yoga', 'Strength & Mobility']} />
       </div>
     </section>
@@ -240,7 +240,7 @@ function Manifesto() {
 // ─── CLASSES (HORIZONTAL SCROLL) ───────────────────────────────────────────────
 function Classes() {
   return (
-    <section id="classes" className="relative">
+    <section id="classes" className="relative overflow-hidden">
       <div className="section-padding pb-8">
         <div className="max-w-7xl mx-auto px-5 md:px-8">
           <SectionReveal>
@@ -254,7 +254,7 @@ function Classes() {
       </div>
 
       {/* Horizontal scroll on desktop */}
-      <div className="hidden md:block h-[300vh] relative">
+      <div className="hidden md:block h-[300vh] relative overflow-hidden">
         <HorizontalSection className="h-[300vh]">
           <div className="flex items-center gap-6 px-8">
             {classes.map((cls, i) => (
