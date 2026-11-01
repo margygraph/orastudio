@@ -15,6 +15,8 @@ import { generateICS, downloadICS, getNextDateForDay, addMinutes } from './utils
 function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [hidden, setHidden] = useState(false);
+  const lastScrollY = useRef(0);
   const nav = [
     { label: 'Classes', href: '#classes' },
     { label: 'Timetable', href: '#timetable' },
@@ -24,15 +26,30 @@ function Header() {
   ];
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 50);
+    const onScroll = () => {
+      const currentY = window.scrollY;
+      setScrolled(currentY > 50);
+
+      // Hide on scroll down (past a threshold), show on scroll up or at top
+      if (currentY > 80 && currentY > lastScrollY.current) {
+        setHidden(true);
+        if (menuOpen) setMenuOpen(false);
+      } else if (currentY < lastScrollY.current || currentY <= 80) {
+        setHidden(false);
+      }
+      lastScrollY.current = currentY;
+    };
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
-  }, []);
+  }, [menuOpen]);
 
   return (
-    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-      scrolled ? 'bg-bone/90 backdrop-blur-md border-b border-black/5' : 'bg-transparent'
-    }`}>
+    <header
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+        scrolled ? 'bg-bone/90 backdrop-blur-md border-b border-black/5' : 'bg-transparent'
+      }`}
+      style={{ transform: hidden ? 'translateY(-100%)' : 'translateY(0)' }}
+    >
       <div className="max-w-7xl mx-auto px-5 md:px-8 h-16 md:h-20 flex items-center justify-between">
         <a href="#" className="inline-flex items-center">
           <Logo />
