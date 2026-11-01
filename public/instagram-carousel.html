@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ora Studio - Instagram Stories Carousel</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #1C1B19;
+      color: #F4EFE6;
+      padding: 40px 20px;
+    }
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      font-weight: 300;
+      letter-spacing: -0.02em;
+    }
+    .subtitle {
+      color: #B9714F;
+      font-size: 1rem;
+      margin-bottom: 40px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+    .slide {
+      position: relative;
+      aspect-ratio: 9/16;
+      border-radius: 12px;
+      overflow: hidden;
+      background: #2a2a2a;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+    .slide:hover {
+      transform: scale(1.02);
+    }
+    .slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .slide-number {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: rgba(0,0,0,0.6);
+      color: white;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      backdrop-filter: blur(10px);
+    }
+    .instructions {
+      background: #2a2a2a;
+      padding: 30px;
+      border-radius: 12px;
+      margin-top: 40px;
+    }
+    .instructions h2 {
+      font-size: 1.5rem;
+      margin-bottom: 20px;
+      color: #B9714F;
+    }
+    .instructions ol {
+      margin-left: 20px;
+      line-height: 1.8;
+    }
+    .instructions li {
+      margin-bottom: 10px;
+    }
+    .download-all {
+      display: inline-block;
+      background: #B9714F;
+      color: white;
+      padding: 12px 24px;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: 500;
+      margin-top: 20px;
+      transition: background 0.3s ease;
+    }
+    .download-all:hover {
+      background: #a05f3f;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Ora Studio</h1>
+    <p class="subtitle">Instagram Stories Carousel</p>
+    
+    <div class="grid">
+      <div class="slide">
+        <span class="slide-number">1/6</span>
+        <img src="https://image.qwenlm.ai/generated-images/8bd6c203-e904-42fe-8e23-ea672f562cf1/_result.png" alt="Cover slide">
+      </div>
+      <div class="slide">
+        <span class="slide-number">2/6</span>
+        <img src="https://image.qwenlm.ai/generated-images/3cf2c36f-1116-495e-a8f8-8ea8fc1d3574/_result.png" alt="Philosophy slide">
+      </div>
+      <div class="slide">
+        <span class="slide-number">3/6</span>
+        <img src="https://image.qwenlm.ai/generated-images/b19ef5d4-9e82-44de-9172-096e086ad6d8/_result.png" alt="Classes slide">
+      </div>
+      <div class="slide">
+        <span class="slide-number">4/6</span>
+        <img src="https://image.qwenlm.ai/generated-images/a407ff68-7875-4e48-90a8-57909a93046c/_result.png" alt="Instructors slide">
+      </div>
+      <div class="slide">
+        <span class="slide-number">5/6</span>
+        <img src="https://image.qwenlm.ai/generated-images/a1b9ff0b-a719-4714-a4e5-90ca21ba61d6/_result.png" alt="Studio slide">
+      </div>
+      <div class="slide">
+        <span class="slide-number">6/6</span>
+        <img src="https://image.qwenlm.ai/generated-images/348be068-e261-40cd-8c50-5c543b70ec35/_result.png" alt="CTA slide">
+      </div>
+    </div>
+
+    <div class="instructions">
+      <h2>Come usare queste slide</h2>
+      <ol>
+        <li>Click destro su ogni immagine e seleziona "Salva immagine con nome"</li>
+        <li>Apri Instagram sul tuo telefono</li>
+        <li>Tocca l'icona della tua storia in alto a sinistra</li>
+        <li>Seleziona tutte e 6 le immagini dalla galleria</li>
+        <li>Pubblica come storia (verranno mostrate in sequenza come carosello)</li>
+      </ol>
+      <p style="margin-top: 20px; color: #B9714F;">💡 Suggerimento: Aggiungi musica di sottofondo e sticker interattivi per aumentare l'engagement!</p>
+    </div>
+  </div>
+</body>
+</html>
