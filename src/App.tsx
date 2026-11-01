@@ -661,13 +661,13 @@ function Instructors() {
           {instructors.map((inst, i) => (
             <Reveal key={inst.id} delay={i * 80}>
               <div className="group">
-                <div
-                  className="aspect-[3/4] rounded-2xl mb-4 overflow-hidden relative"
-                  style={{ backgroundColor: inst.imageColor }}
-                >
-                  <div className="absolute inset-0 flex items-end p-5">
-                    <span className="text-white/80 text-sm font-medium">{inst.name.split(' ')[0]}</span>
-                  </div>
+                <div className="aspect-[3/4] rounded-2xl mb-4 overflow-hidden relative">
+                  <img
+                    src={inst.image}
+                    alt={`Portrait of ${inst.name}, ${inst.specialties.join(' and ')} instructor at Ora Studio`}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+                    loading="lazy"
+                  />
                 </div>
                 <h3 className="font-display text-lg font-medium text-charcoal">{inst.name}</h3>
                 <p className="text-xs text-clay mb-2">{inst.specialties.join(' · ')}</p>
