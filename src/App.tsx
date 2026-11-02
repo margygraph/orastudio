@@ -603,16 +603,16 @@ function Studio() {
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-16">
           <FadeUp delay={0}>
-            <ParallaxImage src="https://image.qwenlm.ai/generated-images/02992ea2-c055-4fc7-ab6f-ca405182f6bd/_result.png" alt="Ora Studio main space" className="aspect-square md:col-span-2 md:row-span-2 rounded-xl" />
+            <ParallaxImage src="https://image.qwenlm.ai/generated-images/69af45d4-5289-4a5c-bc43-9a94274f676c/_result.png?w=800&q=75&fm=webp" alt="Woman practicing warrior pose in bright studio" className="aspect-square md:col-span-2 md:row-span-2 rounded-xl" />
           </FadeUp>
           <FadeUp delay={0.1}>
-            <ParallaxImage src="https://image.qwenlm.ai/generated-images/2ac0b9ec-b887-4d9b-8ec2-248ad23170ec/_result.png" alt="Yoga space" className="aspect-square rounded-xl" />
+            <ParallaxImage src="https://image.qwenlm.ai/generated-images/64ff69e4-b11c-4d61-98f3-2d8726504de6/_result.png?w=800&q=75&fm=webp" alt="Elegant downward dog yoga pose" className="aspect-square rounded-xl" />
           </FadeUp>
           <FadeUp delay={0.2}>
-            <ParallaxImage src="https://image.qwenlm.ai/generated-images/24e086ae-bccd-4d6c-93a3-a7b905b95271/_result.png" alt="Equipment detail" className="aspect-square rounded-xl" />
+            <ParallaxImage src="https://image.qwenlm.ai/generated-images/5c8769f9-4816-4e71-bf8f-22f9cd727c38/_result.png?w=800&q=75&fm=webp" alt="Pilates reformer session" className="aspect-square rounded-xl" />
           </FadeUp>
           <FadeUp delay={0.3}>
-            <ParallaxImage src="https://image.qwenlm.ai/generated-images/51441e25-6053-4b22-9c8c-5b64b8f4207f/_result.png" alt="Natural light" className="aspect-square rounded-xl" />
+            <ParallaxImage src="https://image.qwenlm.ai/generated-images/28c919b1-15be-49d7-a807-b431c81bb2d1/_result.png?w=800&q=75&fm=webp" alt="Serene tree pose yoga" className="aspect-square rounded-xl" />
           </FadeUp>
         </div>
 
