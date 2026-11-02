@@ -606,7 +606,7 @@ function Studio() {
             <ParallaxImage src="https://image.qwenlm.ai/generated-images/69af45d4-5289-4a5c-bc43-9a94274f676c/_result.png?w=800&q=75&fm=webp" alt="Woman practicing warrior pose in bright studio" className="aspect-square md:col-span-2 md:row-span-2 rounded-xl" />
           </FadeUp>
           <FadeUp delay={0.1}>
-            <ParallaxImage src="https://image.qwenlm.ai/generated-images/64ff69e4-b11c-4d61-98f3-2d8726504de6/_result.png?w=800&q=75&fm=webp" alt="Elegant downward dog yoga pose" className="aspect-square rounded-xl" />
+            <ParallaxImage src="https://image.qwenlm.ai/generated-images/9f147f37-10b7-47fd-ab30-95c03f657f8d/_result.png?w=800&q=75&fm=webp" alt="Elegant downward dog yoga pose" className="aspect-square rounded-xl" />
           </FadeUp>
           <FadeUp delay={0.2}>
             <ParallaxImage src="https://image.qwenlm.ai/generated-images/5c8769f9-4816-4e71-bf8f-22f9cd727c38/_result.png?w=800&q=75&fm=webp" alt="Pilates reformer session" className="aspect-square rounded-xl" />
