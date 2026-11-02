@@ -125,32 +125,32 @@ function Hero() {
           width="1400"
           height="800"
         />
-        {/* Overlay scuro per leggibilità testo */}
-        <div className="absolute inset-0 bg-gradient-to-r from-deep-black/80 via-deep-black/60 to-deep-black/40" />
-        <div className="absolute inset-0 bg-gradient-to-t from-deep-black/60 via-transparent to-transparent" />
+        {/* Overlay chiaro per coerenza con il resto del sito */}
+        <div className="absolute inset-0 bg-gradient-to-r from-ice-white/85 via-ice-white/70 to-ice-white/40" />
+        <div className="absolute inset-0 bg-gradient-to-t from-ice-white/50 via-transparent to-transparent" />
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-5 md:px-8 w-full py-12 md:py-0 animate-[fadeInUp_0.8s_ease-out]">
         <div className="max-w-4xl">
           <div className="mb-6 md:mb-8">
-            <LogoMark className="w-12 h-12 md:w-16 md:h-16" variant="light" />
+            <LogoMark className="w-12 h-12 md:w-16 md:h-16" />
           </div>
 
           <p
             className="text-sm md:text-base uppercase tracking-[0.3em] text-neon-cyan mb-6 md:mb-8 font-bold animate-[fadeInUp_0.8s_ease-out_0.2s_both]"
-            style={{ textShadow: '0 2px 10px rgba(0, 217, 255, 0.5)' }}
+            style={{ textShadow: '0 2px 10px rgba(0, 217, 255, 0.3)' }}
           >
             Pilates · Yoga · Strength — Milan
           </p>
 
-          <h1 className="font-display text-display-xl font-bold text-ice-white mb-10 leading-[0.9] animate-[fadeInUp_0.8s_ease-out_0.4s_both]" style={{ textShadow: '0 4px 20px rgba(0, 0, 0, 0.5)' }}>
+          <h1 className="font-display text-display-xl font-bold text-deep-black mb-10 leading-[0.9] animate-[fadeInUp_0.8s_ease-out_0.4s_both]" style={{ textShadow: '0 4px 20px rgba(255, 255, 255, 0.5)' }}>
             Move well.<br />
             <span className="italic text-electric-red">Feel the difference.</span>
           </h1>
 
           <p
-            className="text-xl md:text-2xl text-ice-white/95 max-w-2xl mb-12 leading-relaxed font-medium animate-[fadeInUp_0.8s_ease-out_0.6s_both]"
-            style={{ textShadow: '0 2px 10px rgba(0, 0, 0, 0.5)' }}
+            className="text-xl md:text-2xl text-deep-black/90 max-w-2xl mb-12 leading-relaxed font-medium animate-[fadeInUp_0.8s_ease-out_0.6s_both]"
+            style={{ textShadow: '0 2px 10px rgba(255, 255, 255, 0.8)' }}
           >
             A small, intentional studio in the heart of Milan. Expert instructors, considered equipment, classes that actually fit your life.
           </p>
@@ -159,7 +159,7 @@ function Hero() {
             <a href="#booking" className="magnetic-btn inline-flex items-center justify-center px-10 py-5 bg-electric-red text-white font-bold rounded-full text-lg shadow-2xl hover:shadow-electric-red/50 hover:scale-105 transition-all">
               Book a free trial
             </a>
-            <a href="#classes" className="inline-flex items-center justify-center px-10 py-5 border-2 border-ice-white text-ice-white font-bold rounded-full text-lg hover:bg-ice-white hover:text-deep-black transition-all">
+            <a href="#classes" className="inline-flex items-center justify-center px-10 py-5 border-2 border-deep-black text-deep-black font-bold rounded-full text-lg hover:bg-deep-black hover:text-ice-white transition-all">
               Explore classes
             </a>
           </div>
@@ -167,7 +167,7 @@ function Hero() {
       </div>
 
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 animate-[fadeIn_1s_ease-out_1.5s_both]">
-        <div className="w-1 h-16 bg-gradient-to-b from-transparent via-ice-white to-transparent animate-[bounce_2s_ease-in-out_infinite]" />
+        <div className="w-1 h-16 bg-gradient-to-b from-transparent via-electric-red to-transparent animate-[bounce_2s_ease-in-out_infinite]" />
       </div>
     </section>
   );
