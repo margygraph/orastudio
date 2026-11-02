@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ora Studio - Carosello Instagram 4:5</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #0A0A0A;
+            color: #F5F5F5;
+            padding: 40px 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #FF4D4D 0%, #00D9FF 50%, #FFE500 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.02em;
+        }
+        
+        .subtitle {
+            font-size: 1.3rem;
+            color: #999;
+            margin-bottom: 10px;
+        }
+        
+        .format-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #FF4D4D 0%, #FF6B6B 100%);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-top: 15px;
+        }
+        
+        .carousel-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            margin-bottom: 80px;
+        }
+        
+        .slide-card {
+            position: relative;
+            background: #1A1A1A;
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+        }
+        
+        .slide-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 60px rgba(255, 77, 77, 0.3);
+        }
+        
+        .slide-image {
+            position: relative;
+            aspect-ratio: 4/5;
+            overflow: hidden;
+        }
+        
+        .slide-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+        
+        .slide-card:hover .slide-image img {
+            transform: scale(1.05);
+        }
+        
+        .slide-number {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 77, 77, 0.95);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 20px rgba(255, 77, 77, 0.4);
+        }
+        
+        .slide-info {
+            padding: 25px;
+        }
+        
+        .slide-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #F5F5F5;
+        }
+        
+        .slide-description {
+            font-size: 0.95rem;
+            color: #999;
+            line-height: 1.5;
+        }
+        
+        .download-btn {
+            display: block;
+            width: 100%;
+            background: linear-gradient(135deg, #FF4D4D 0%, #FF6B6B 100%);
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            text-align: center;
+        }
+        
+        .download-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 30px rgba(255, 77, 77, 0.4);
+        }
+        
+        .instructions {
+            background: linear-gradient(135deg, rgba(0, 217, 255, 0.05) 0%, rgba(255, 77, 77, 0.05) 100%);
+            border: 1px solid rgba(0, 217, 255, 0.2);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .instructions h2 {
+            font-size: 2rem;
+            margin-bottom: 25px;
+            color: #00D9FF;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .instructions ol {
+            margin-left: 25px;
+            line-height: 2.2;
+            color: #CCC;
+            font-size: 1.05rem;
+        }
+        
+        .instructions li {
+            margin-bottom: 12px;
+        }
+        
+        .instructions strong {
+            color: #F5F5F5;
+        }
+        
+        .tips-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .tip-card {
+            background: #1A1A1A;
+            border-radius: 15px;
+            padding: 30px;
+            border-left: 4px solid;
+        }
+        
+        .tip-card:nth-child(1) { border-left-color: #FF4D4D; }
+        .tip-card:nth-child(2) { border-left-color: #00D9FF; }
+        .tip-card:nth-child(3) { border-left-color: #FFE500; }
+        
+        .tip-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: #F5F5F5;
+        }
+        
+        .tip-card ul {
+            list-style: none;
+            line-height: 2;
+            color: #CCC;
+        }
+        
+        .tip-card li:before {
+            content: "⚡";
+            margin-right: 10px;
+        }
+        
+        .caption-box {
+            background: #1A1A1A;
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 40px;
+            border: 1px solid rgba(255, 77, 77, 0.2);
+        }
+        
+        .caption-box h3 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: #FFE500;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .caption-text {
+            background: #0A0A0A;
+            border-radius: 10px;
+            padding: 25px;
+            font-family: 'DM Sans', monospace;
+            font-size: 0.95rem;
+            line-height: 1.8;
+            color: #CCC;
+            white-space: pre-wrap;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .copy-btn {
+            background: linear-gradient(135deg, #00D9FF 0%, #33E1FF 100%);
+            color: #0A0A0A;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .copy-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 30px rgba(0, 217, 255, 0.4);
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .carousel-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .tips-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Ora Studio</h1>
+            <p class="subtitle">Carosello Instagram - Formato 4:5</p>
+            <span class="format-badge">📱 1080 × 1350px</span>
+        </header>
+        
+        <div class="carousel-grid">
+            <div class="slide-card">
+                <div class="slide-image">
+                    <img src="https://image.qwenlm.ai/generated-images/8980a42f-bfa3-4153-bd51-a7ddfdee94ee/_result.png" alt="Slide 1 - Hero Section">
+                    <div class="slide-number">1</div>
+                </div>
+                <div class="slide-info">
+                    <h3 class="slide-title">Hero Section Cinematografica</h3>
+                    <p class="slide-description">Immagine d'impatto con typography bold e CTA evidenti</p>
+                    <a href="https://image.qwenlm.ai/generated-images/8980a42f-bfa3-4153-bd51-a7ddfdee94ee/_result.png" download="ora-studio-slide-1.png" class="download-btn">⬇️ Scarica Slide 1</a>
+                </div>
+            </div>
+            
+            <div class="slide-card">
+                <div class="slide-image">
+                    <img src="https://image.qwenlm.ai/generated-images/7d7e6bd8-6881-4875-bb15-1eea75e4b302/_result.png" alt="Slide 2 - Classes">
+                    <div class="slide-number">2</div>
+                </div>
+                <div class="slide-info">
+                    <h3 class="slide-title">Sezione Classi</h3>
+                    <p class="slide-description">Grid di 5 discipline con design system coerente</p>
+                    <a href="https://image.qwenlm.ai/generated-images/7d7e6bd8-6881-4875-bb15-1eea75e4b302/_result.png" download="ora-studio-slide-2.png" class="download-btn">⬇️ Scarica Slide 2</a>
+                </div>
+            </div>
+            
+            <div class="slide-card">
+                <div class="slide-image">
+                    <img src="https://image.qwenlm.ai/generated-images/3c68d8ec-3775-413c-ba7d-8d8536712345/_result.png" alt="Slide 3 - Live Timetable">
+                    <div class="slide-number">3</div>
+                </div>
+                <div class="slide-info">
+                    <h3 class="slide-title">Timetable Live</h3>
+                    <p class="slide-description">Timeline interattiva con classi in evidenza</p>
+                    <a href="https://image.qwenlm.ai/generated-images/3c68d8ec-3775-413c-ba7d-8d8536712345/_result.png" download="ora-studio-slide-3.png" class="download-btn">⬇️ Scarica Slide 3</a>
+                </div>
+            </div>
+            
+            <div class="slide-card">
+                <div class="slide-image">
+                    <img src="https://image.qwenlm.ai/generated-images/3f91b66f-4e45-441c-9bce-f9ab7b9c315f/_result.png" alt="Slide 4 - Breathing">
+                    <div class="slide-number">4</div>
+                </div>
+                <div class="slide-info">
+                    <h3 class="slide-title">Esperienza Interattiva</h3>
+                    <p class="slide-description">Esercizio di respiro guidato con animazioni</p>
+                    <a href="https://image.qwenlm.ai/generated-images/3f91b66f-4e45-441c-9bce-f9ab7b9c315f/_result.png" download="ora-studio-slide-4.png" class="download-btn">⬇️ Scarica Slide 4</a>
+                </div>
+            </div>
+            
+            <div class="slide-card">
+                <div class="slide-image">
+                    <img src="https://image.qwenlm.ai/generated-images/fbc51f29-b5bc-4080-8833-d2338b48e7c4/_result.png" alt="Slide 5 - Design System">
+                    <div class="slide-number">5</div>
+                </div>
+                <div class="slide-info">
+                    <h3 class="slide-title">Design System</h3>
+                    <p class="slide-description">Palette colori Electric Minimal e tipografia</p>
+                    <a href="https://image.qwenlm.ai/generated-images/fbc51f29-b5bc-4080-8833-d2338b48e7c4/_result.png" download="ora-studio-slide-5.png" class="download-btn">⬇️ Scarica Slide 5</a>
+                </div>
+            </div>
+            
+            <div class="slide-card">
+                <div class="slide-image">
+                    <img src="https://image.qwenlm.ai/generated-images/2bc40539-c699-423b-ab28-dad813bfbc10/_result.png" alt="Slide 6 - Performance">
+                    <div class="slide-number">6</div>
+                </div>
+                <div class="slide-info">
+                    <h3 class="slide-title">Performance & CTA</h3>
+                    <p class="slide-description">Score 99/100 e call-to-action finale</p>
+                    <a href="https://image.qwenlm.ai/generated-images/2bc40539-c699-423b-ab28-dad813bfbc10/_result.png" download="ora-studio-slide-6.png" class="download-btn">⬇️ Scarica Slide 6</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="instructions">
+            <h2>📱 Come pubblicare su Instagram</h2>
+            <ol>
+                <li><strong>Scarica tutte le slide:</strong> Clicca sui pulsanti "Scarica" per ogni immagine</li>
+                <li><strong>Apri Instagram:</strong> Usa l'app mobile (non funziona da desktop)</li>
+                <li><strong>Crea un nuovo post:</strong> Tocca il "+" in basso al centro</li>
+                <li><strong>Seleziona più immagini:</strong> Tocca l'icona dei quadrati sovrapposti e seleziona tutte e 6 le slide in ordine (1-6)</li>
+                <li><strong>Verifica l'ordine:</strong> Assicurati che le slide siano nell'ordine corretto prima di procedere</li>
+                <li><strong>Applica filtri (opzionale):</strong> Puoi lasciare i filtri originali o applicare un filtro coerente</li>
+                <li><strong>Scrivi la caption:</strong> Copia il testo suggerito qui sotto</li>
+                <li><strong>Aggiungi hashtag:</strong> Instagram permette fino a 30 hashtag</li>
+                <li><strong>Pubblica:</strong> Tocca "Condividi" e il gioco è fatto!</li>
+            </ol>
+        </div>
+        
+        <div class="caption-box">
+            <h3>💡 Caption suggerita per il post</h3>
+            <div class="caption-text" id="caption">🚀 Presentiamo Ora Studio: il futuro dei siti web wellness!
+
+✨ Cosa rende questo sito unico:
+
+🎬 Hero section cinematografica con immagini mozzafiato
+🫁 Esperienze interattive: esercizi di respiro, quiz personalizzati
+📅 Timetable live con classi in evidenza in tempo reale
+🎨 Design "Electric Minimal": audace, moderno, memorabile
+⚡ Performance fulminee: Lighthouse 99/100
+🌅 Modalità giorno/notte automatica
+🧭 Navigazione a bussola innovativa
+✍️ Testimonianze con effetto typewriter
+
+🎨 Palette Electric Minimal:
+🔴 Rosso elettrico #FF4D4D
+🔵 Ciano neon #00D9FF
+🟡 Giallo solare #FFE500
+⚫ Nero profondo #0A0A0A
+⚪ Bianco ghiaccio #F5F5F5
+
+💻 Stack tecnologico:
+React + TypeScript + Tailwind CSS + Framer Motion
+Deploy: GitHub Pages
+
+Scorri le slide per scoprire tutte le funzionalità →
+
+#WebDesign #UIDesign #UXDesign #ReactJS #TypeScript #TailwindCSS #WebDevelopment #FrontendDeveloper #CreativeCoding #DigitalDesign #WebInspiration #DesignInspiration #MinimalDesign #ModernWeb #InteractiveDesign #Performance #Lighthouse #WebDev #CodingLife #DeveloperLife #Portfolio #Website #WebDesigner #UIDesigner #UXDesigner #Frontend #JavaScript #Animation #MotionDesign #WebTrends</div>
+            <button class="copy-btn" onclick="copyCaption()">📋 Copia Caption</button>
+        </div>
+        
+        <div class="tips-grid">
+            <div class="tip-card">
+                <h3>🎯 Strategie Virali</h3>
+                <ul>
+                    <li>Pubblica tra 18:00-21:00</li>
+                    <li>Rispondi ai commenti nella prima ora</li>
+                    <li>Condividi nelle storie con sticker</li>
+                    <li>Tagga account di design influenti</li>
+                    <li>Crea versione reel con transizioni</li>
+                </ul>
+            </div>
+            
+            <div class="tip-card">
+                <h3>⏰ Timing Ottimale</h3>
+                <ul>
+                    <li>Martedì-Giovedì: engagement massimo</li>
+                    <li>18:00-21:00: peak hours</li>
+                    <li>Evita weekend mattina</li>
+                    <li>Pubblica quando il tuo audience è attivo</li>
+                    <li>Analizza gli insight dopo 24h</li>
+                </ul>
+            </div>
+            
+            <div class="tip-card">
+                <h3>📈 Engagement Hacks</h3>
+                <ul>
+                    <li>Fai una domanda nella caption</li>
+                    <li>Usa CTA "Salva questo post"</li>
+                    <li>Chiedi "Quale slide ti piace di più?"</li>
+                    <li>Condividi behind-the-scenes nelle storie</li>
+                    <li>Collabora con altri designer</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function copyCaption() {
+            const caption = document.getElementById('caption').innerText;
+            navigator.clipboard.writeText(caption).then(() => {
+                const btn = event.target;
+                const originalText = btn.innerText;
+                btn.innerText = '✅ Copiato!';
+                btn.style.background = 'linear-gradient(135deg, #00FF00 0%, #00CC00 100%)';
+                setTimeout(() => {
+                    btn.innerText = originalText;
+                    btn.style.background = 'linear-gradient(135deg, #00D9FF 0%, #33E1FF 100%)';
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>
